@@ -12,7 +12,7 @@ public_ssh_acls = filter tfplan.resource_changes as _, rc {
 
 // Print Logging
 // Debugging: https://docs.hashicorp.com/sentinel/writing/debugging/
-print("CIS 4.1: Ensure no AWS security groups allow ingress from 0.0.0.0/0 to port 22")
+print("CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 22")
 print("Security Group Count:", length(public_ssh_acls))
 
 // Security groups provide stateful filtering of ingress/egress network traffic to AWS resources.
