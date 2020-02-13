@@ -1,30 +1,32 @@
 import "tfplan/v2" as tfplan
 
-// Sentinel Filter Expression:
-default_vpc_acls = filter tfplan.resource_changes as _, rc {
+// Sentinel Filter Expression: https://docs.hashicorp.com/sentinel/language/collection-operations/#filter-expression
+aws_default_network_acl = filter tfplan.resource_changes as _, rc {
 	rc.mode is "managed" and
-	rc.type is "aws_network_acl_rule" and
-	rc.change.actions is ["create"] and
-	rc.change.after.rule_action is "allow" and
-	rc.change.after.cidr_block is "0.0.0.0/0" and
-	rc.change.after.to_port is 22
+	rc.type is "aws_default_network_acl"
 }
 
 // Debugging: https://docs.hashicorp.com/sentinel/writing/debugging/
 print("CIS 4.3: Ensure the default security group of every VPC restricts all traffic")
-print("Security Group Count:", length(public_ssh_acls))
+print("Security Group Count:", length(aws_default_network_acl))
 
 // Configuring all VPC default security groups to restrict all traffic will encourage least privilege
 // security group development and mindful placement of AWS resources into security groups which will
 // in_turn reduce the exposure of those resources.
-restrict_all_vpc_traffic_acl_rules = rule {
-	// public_ssh_acls contains a map of acl rules. Use the length function to determine how many rules are out of compliance.
-	// Total number of rules should not exceed 0
-	// Builtin Function _ length: https://docs.hashicorp.com/sentinel/functions/length/
-	length(public_ssh_acls) == 0
+deny_all_vpc_inbound_acls = rule {
+	all values(aws_default_network_acl) as acl {
+		length(acl.change.after.ingress) == 0
+	}
+}
+
+deny_all_vpc_outbound_acls = rule {
+	all values(aws_default_network_acl) as acl {
+		length(acl.change.after.egress) == 0
+	}
 }
 
 // Main
 main = rule {
-	restrict_all_vpc_traffic_acl_rules
+	deny_all_vpc_inbound_acls and
+	deny_all_vpc_outbound_acls
 }
