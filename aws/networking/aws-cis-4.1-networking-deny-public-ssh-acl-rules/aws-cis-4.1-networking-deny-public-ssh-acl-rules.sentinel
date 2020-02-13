@@ -1,6 +1,7 @@
 import "tfplan/v2" as tfplan
 
-// Sentinel Filter Expression
+// Filter all Public SSH ACL Rules
+// Sentinel Filter Expression: https://docs.hashicorp.com/sentinel/language/collection-operations/#filter-expression
 public_ssh_acls = filter tfplan.resource_changes as _, rc {
 	rc.mode is "managed" and
 	rc.type is "aws_network_acl_rule" and
@@ -10,7 +11,6 @@ public_ssh_acls = filter tfplan.resource_changes as _, rc {
 	rc.change.after.to_port is 22
 }
 
-// Print Logging
 // Debugging: https://docs.hashicorp.com/sentinel/writing/debugging/
 print("CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 22")
 print("Security Group Count:", length(public_ssh_acls))

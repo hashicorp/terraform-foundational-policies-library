@@ -1,6 +1,7 @@
 import "tfplan/v2" as tfplan
 
-// Sentinel Filter Expression
+// Filter all Public RDP ACL Rules
+// Sentinel Filter Expression: https://docs.hashicorp.com/sentinel/language/collection-operations/#filter-expression
 public_ssh_acls = filter tfplan.resource_changes as _, rc {
 	rc.mode is "managed" and
 	rc.type is "aws_network_acl_rule" and
