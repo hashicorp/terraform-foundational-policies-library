@@ -1,0 +1,34 @@
+import "tfplan/v2" as tfplan
+import "strings"
+
+restricted_source_address_prefixes = ["*","internet","any","0.0.0.0","/0",]
+
+allNetworkSecurityGroups = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "azurerm_network_security_group" and
+	resource_changes.mode is "managed"
+}
+
+getNetworkSecurityGroupCompliance = func(groups, port){
+	mapSecurityRules = {}
+	for groups as _, group {
+		for group.change.after.security_rule as sr {
+			if sr.destination_port_range is "*" or sr.destination_port_range is port {
+				if sr.source_address_prefix in restricted_source_address_prefixes {
+					mapSecurityRules[sr.name] = sr
+				}
+			} else if sr.destination_port_range matches "-" {
+				listPortRange = strings.split(sr.destination_port_range, "-")
+				if int(listPortRange[0]) < int(port) and int(listPortRange[1]) > int(port) {
+					mapSecurityRules[sr.name] = sr
+				}
+			}
+		}
+	}
+	return length(mapSecurityRules)
+}
+
+print("CIS 6.2: Ensure that SSH access is restricted from the internet")
+
+main = rule {
+	getNetworkSecurityGroupCompliance(allNetworkSecurityGroups, "22") == 0
+}

@@ -1,0 +1,83 @@
+resource_changes = {
+	"azurerm_resource_group.this": {
+		"address": "azurerm_resource_group.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"location": "australiaeast",
+				"name":     "Sentinel-Foundations-Azure",
+			},
+			"after_unknown": {
+				"id":   true,
+				"tags": true,
+			},
+			"before": null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_resource_group",
+	},
+	"azurerm_sql_firewall_rule.pass": {
+		"address": "azurerm_sql_firewall_rule.pass",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"end_ip_address":      "10.0.17.62",
+				"name":                "pass",
+				"resource_group_name": "Sentinel-Foundations-Azure",
+				"server_name":         "mysqlserver",
+				"start_ip_address":    "10.0.17.62",
+			},
+			"after_unknown": {
+				"id": true,
+			},
+			"before": null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "pass",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_sql_firewall_rule",
+	},
+	"azurerm_sql_server.this": {
+		"address": "azurerm_sql_server.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"administrator_login":          "4dm1n157r470r",
+				"administrator_login_password": "4-v3ry-53cr37-p455w0rd",
+				"identity":                     [],
+				"location":                     "australiaeast",
+				"name":                         "mysqlserver",
+				"resource_group_name":          "Sentinel-Foundations-Azure",
+				"version":                      "12.0",
+			},
+			"after_unknown": {
+				"fully_qualified_domain_name": true,
+				"id":       true,
+				"identity": [],
+				"tags":     true,
+			},
+			"before": null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_sql_server",
+	},
+}
