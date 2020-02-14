@@ -16,7 +16,7 @@ print("CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 2
 print("Security Group Count:", length(public_ssh_acls))
 
 // Security groups provide stateful filtering of ingress/egress network traffic to AWS resources.
-// It is recommended that no security group allows unrestricted ingress access to port 22 .
+// It is recommended that no security group allows unrestricted ingress access to port 22.
 deny_public_ssh_acl_rules = rule {
 	// public_ssh_acls contains a map of acl rules. Use the length function to determine how many rules are out of compliance.
 	// Total number of rules should not exceed 0
