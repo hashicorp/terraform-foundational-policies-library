@@ -1,0 +1,17 @@
+import "tfplan/v2" as tfplan
+
+print("CIS 3.6: Ensure that 'Public access level' is set to Private for blob containers")
+
+container_access_type_is_private = rule {
+    all filter tfplan.resource_changes as _, resource_changes {
+        resource_changes.mode is "managed" and
+        resource_changes.type is "azurerm_storage_container" and
+        resource_changes.change.actions is ["create"]
+    } as _, rc {
+        rc.change.after.container_access_type is "private"
+    }
+}
+
+main = rule {
+	container_access_type_is_private
+}
