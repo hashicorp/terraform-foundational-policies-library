@@ -1,11 +1,11 @@
 #  CIS Microsoft Azure Foundational Sentinel policies
 
-The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Microsoft Azure Foundations Benchmark version 1.1.0](https://www.cisecurity.org/benchmark/azure/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html)
+The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Microsoft Azure Foundations Benchmark version 1.1.0](https://www.cisecurity.org/benchmark/azure/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html).
 
 ## CIS 3.1: Ensure that 'Secure transfer required' is set to 'Enabled'
 
 ### Description
-The secure transfer option enhances the security of a storage account by only allowing requests to the storage account by a secure connection
+The secure transfer option enhances the security of a storage account by only allowing requests to the storage account by a secure connection.
 
 ### Configuration
 
@@ -19,7 +19,7 @@ policy "azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel" {
 ## CIS 3.3: Ensure Storage logging is enabled for Queue service for read, write, and delete requests
 
 ### Description
-Storage Analytics logs contain detailed information about successful and failed requests to a storage service. This information can be used to monitor individual requests and to diagnose issues with a storage service
+Storage Analytics logs contain detailed information about successful and failed requests to a storage service. This information can be used to monitor individual requests and to diagnose issues with a storage service.
 
 ### Configuration
 
@@ -54,7 +54,7 @@ Storage accounts should be configured to deny access to traffic from all network
 ```hcl
 policy "azure-cis-3.7-storage-default-network-access-rule-set-to-deny" {
   source     = "github.com/hashicorp/azure/storage/azure-cis-3.7-storage-default-network-access-rule-set-to-deny/azure-cis-3.7-storage-default-network-access-rule-set-to-deny.sentinel?ref=master"
-  enforce    = "advisory"
+  enforcement_level    = "advisory"
 }
 ```
 
@@ -68,6 +68,6 @@ Turning on firewall rules for storage account will block access to incoming requ
 ```hcl
 policy "azure-cis-3.8-storage-trusted-microsoft-services-is-enabled" {
   source     = "github.com/hashicorp/azure/storage/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled.sentinel?ref=master"
-  enforce    = "advisory"
+  enforcement_level    = "advisory"
 }
 ```

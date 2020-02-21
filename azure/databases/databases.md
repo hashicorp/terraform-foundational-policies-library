@@ -1,6 +1,6 @@
 #  CIS Microsoft Azure Foundational Sentinel policies
 
-The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Microsoft Azure Foundations Benchmark version 1.1.0](https://www.cisecurity.org/benchmark/azure/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html)
+The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Microsoft Azure Foundations Benchmark version 1.1.0](https://www.cisecurity.org/benchmark/azure/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html).
 
 ## CIS 4.11: Ensure 'Enforce SSL connection' is set to 'ENABLED' for MySQL Database Server
 
@@ -12,7 +12,7 @@ Enforcing SSL connections between database server and client applications helps 
 ```hcl
 policy "azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled" {
   source     = "github.com/hashicorp/azure/databases/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled.sentinel?ref=master"
-  enforce    = "advisory"
+  enforcement_level = "advisory"
 }
 ```
 
@@ -25,7 +25,7 @@ Enforcing SSL connections between database server and client applications helps 
 
 ```hcl
 policy "azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled" {
-  source     = "github.com/hashicorp/azure/databases/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled.sentinel?ref=master"
-  enforce    = "advisory"
+  source = "github.com/hashicorp/azure/databases/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled.sentinel?ref=master"
+  enforcement_level = "advisory"
 }
 ```
