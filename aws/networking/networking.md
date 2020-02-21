@@ -1,5 +1,5 @@
 #  CIS Amazon Web Services Foundational Sentinel policies
-The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Amazon Web Services Foundations Benchmark version 1.2.0](https://www.cisecurity.org/benchmark/amazon_web_services/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html)
+The following code snippets show the configuration settings that are required to successfully deploy Sentinel policies that follow the security recommendations that are provided in the [CIS Amazon Web Services Foundations Benchmark version 1.2.0](https://www.cisecurity.org/benchmark/amazon_web_services/). We cover policy configuration in more details in the [Managing Sentinel Policies](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html) section in the Terraform Cloud [documentation](https://www.terraform.io/docs/cloud/index.html).
 
 ## CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 22
 
