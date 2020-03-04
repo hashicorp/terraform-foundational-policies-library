@@ -11,7 +11,7 @@ Enforcing SSL connections between database server and client applications helps 
 
 ```hcl
 policy "azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled" {
-  source     = "github.com/hashicorp/azure/databases/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled.sentinel?ref=master"
+  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/databases/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled/azure-cis-4.11-databases-mysql-enforce-ssl-connection-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -25,7 +25,7 @@ Enforcing SSL connections between database server and client applications helps 
 
 ```hcl
 policy "azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled" {
-  source = "github.com/hashicorp/azure/databases/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled.sentinel?ref=master"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/databases/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled/azure-cis-4.13-databases-psql-enforce-ssl-connection-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
 ```

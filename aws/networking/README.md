@@ -10,7 +10,7 @@ Removing unfettered connectivity to remote console services, such as SSH, reduce
 
 ```hcl
 policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
-  source     = "github.com/hashicorp/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel?ref=master"
+  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
   enforce    = "advisory"
 }
 ```
@@ -24,7 +24,7 @@ Removing unfettered connectivity to remote console services, such as RDP, reduce
 
 ```hcl
 policy "aws-cis-4.2-networking-deny-public-rdp-acl-rules" {
-  source     = "github.com/hashicorp/aws/networking/aws-cis-4.2-networking-deny-public-rdp-acl-rules/aws-cis-4.2-networking-deny-public-rdp-acl-rules.sentinel?ref=master"
+  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.2-networking-deny-public-rdp-acl-rules/aws-cis-4.2-networking-deny-public-rdp-acl-rules.sentinel"
   enforce    = "advisory"
 }
 ```
@@ -38,7 +38,7 @@ Configuring all VPC default security groups to restrict all traffic will encoura
 
 ```hcl
 policy "aws-cis-4.3-networking-restrict-all-vpc-traffic-acl-rules" {
-  source     = "github.com/hashicorp/aws/networking/aws-cis-4.3-networking-restrict-all-vpc-traffic-acl-rules/aws-cis-4.3-networking-restrict-all-vpc-traffic-acl-rules.sentinel?ref=master"
+  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.3-networking-restrict-all-vpc-traffic-acl-rules/aws-cis-4.3-networking-restrict-all-vpc-traffic-acl-rules.sentinel"
   enforce    = "advisory"
 }
 ```
