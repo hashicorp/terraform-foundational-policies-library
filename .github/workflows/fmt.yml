@@ -1,15 +1,12 @@
-name: Format Sentinel policies to a canonical format
-
+name: HashiCorp Sentinel
 on: [push]
-
 jobs:
-  # This workflow contains a single job called "build"
-  fmt:
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  test-policies:
+    runs-on: ubuntu-latest
+    container:
+      image: thrashr888/sentinel-simulator
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: docker://thrashr888/sentinel-simulator
-
-    # Runs a single command using the runners shell
-    - name: Return all Sentinel Policy files
-      run: find . -name "*.sentinel" ! -path "*/testdata/*"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test Sentinel policies
+        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
