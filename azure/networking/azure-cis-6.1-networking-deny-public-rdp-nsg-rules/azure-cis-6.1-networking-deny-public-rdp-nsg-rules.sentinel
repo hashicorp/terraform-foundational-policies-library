@@ -28,7 +28,6 @@ getNetworkSecurityGroupCompliance = func(groups, port){
 }
 
 print("CIS 6.1: Ensure that RDP access is restricted from the internet")
-// print(getApprovedNetworkSecurityGroups(allNetworkSecurityGroups))
 
 main = rule {
 	getNetworkSecurityGroupCompliance(allNetworkSecurityGroups, "3389") == 0
