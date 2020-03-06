@@ -1,7 +1,7 @@
 name: HashiCorp Sentinel
 on: [push]
 jobs:
-  test-policies:
+  testing:
     runs-on: ubuntu-latest
     container:
       image: thrashr888/sentinel-simulator
