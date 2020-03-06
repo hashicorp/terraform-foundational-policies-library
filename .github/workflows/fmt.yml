@@ -1,0 +1,15 @@
+name: Format Sentinel policies to a canonical format
+
+on: [push]
+
+jobs:
+  # This workflow contains a single job called "build"
+  fmt:
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: docker://thrashr888/sentinel-simulator
+
+    # Runs a single command using the runners shell
+    - name: Return all Sentinel Policy files
+      run: find . -name "*.sentinel" ! -path "*/testdata/*"
