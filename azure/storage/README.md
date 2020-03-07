@@ -11,8 +11,8 @@ The secure transfer option enhances the security of a storage account by only al
 
 ```hcl
 policy "azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.1-storage-secure-transfer-required-is-enabled/azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel"
-  enforce    = "advisory"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.1-storage-secure-transfer-required-is-enabled/azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel"
+  enforcement_level = "advisory"
 }
 ```
 
@@ -25,8 +25,8 @@ Storage Analytics logs contain detailed information about successful and failed 
 
 ```hcl
 policy "azure-cis-3.3-storage-queue-logging-is-enabled.sentinel" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.3-storage-queue-logging-is-enabled/azure-cis-3.3-storage-queue-logging-is-enabled.sentinel"
-  enforce    = "advisory"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.3-storage-queue-logging-is-enabled/azure-cis-3.3-storage-queue-logging-is-enabled.sentinel"
+  enforcement_level = "advisory"
 }
 ```
 
@@ -39,8 +39,8 @@ It is recommended not to provide anonymous access to blob containers until, and 
 
 ```hcl
 policy "azure-cis-3.6-storage-blob-public-access-level-set-to-private" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.6-storage-blob-public-access-level-set-to-private/azure-cis-3.6-storage-blob-public-access-level-set-to-private.sentinel"
-  enforce    = "advisory"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.6-storage-blob-public-access-level-set-to-private/azure-cis-3.6-storage-blob-public-access-level-set-to-private.sentinel"
+  enforcement_level = "advisory"
 }
 ```
 
@@ -53,8 +53,8 @@ Storage accounts should be configured to deny access to traffic from all network
 
 ```hcl
 policy "azure-cis-3.7-storage-default-network-access-rule-set-to-deny" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.7-storage-default-network-access-rule-set-to-deny/azure-cis-3.7-storage-default-network-access-rule-set-to-deny.sentinel"
-  enforcement_level    = "advisory"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.7-storage-default-network-access-rule-set-to-deny/azure-cis-3.7-storage-default-network-access-rule-set-to-deny.sentinel"
+  enforcement_level = "advisory"
 }
 ```
 
@@ -67,7 +67,7 @@ Turning on firewall rules for storage account will block access to incoming requ
 
 ```hcl
 policy "azure-cis-3.8-storage-trusted-microsoft-services-is-enabled" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled.sentinel"
-  enforcement_level    = "advisory"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled/azure-cis-3.8-storage-trusted-microsoft-services-is-enabled.sentinel"
+  enforcement_level = "advisory"
 }
 ```

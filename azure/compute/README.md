@@ -11,7 +11,7 @@ Encrypting the VM's OS and data disks ensures that all content is fully unrecove
 
 ```hcl
 policy "azure-cis-7.1-compute-managed-disk-encryption-is-enabled" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/compute/azure-cis-7.1-compute-managed-disk-encryption-is-enabled/azure-cis-7.1-compute-managed-disk-encryption-is-enabled.sentinel"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/compute/azure-cis-7.1-compute-managed-disk-encryption-is-enabled/azure-cis-7.1-compute-managed-disk-encryption-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -25,7 +25,7 @@ Azure virtual machine extensions are small applications that run with administra
 
 ```hclu
 policy "azure-cis-7.4-compute-only-approved-extensions-are-installed" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/compute/azure-cis-7.4-compute-only-approved-extensions-are-installed/azure-cis-7.4-compute-only-approved-extensions-are-installed.sentinel"
+  source  = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/compute/azure-cis-7.4-compute-only-approved-extensions-are-installed/azure-cis-7.4-compute-only-approved-extensions-are-installed.sentinel"
   enforcement_level = "advisory"
 }
 ```
