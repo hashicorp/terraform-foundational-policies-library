@@ -1,27 +1,27 @@
 import "tfplan/v2" as tfplan
 
 allSQLFirewallRules = filter tfplan.resource_changes as _, resource_changes {
-    resource_changes.type is "azurerm_sql_firewall_rule" and
-	resource_changes.mode is "managed" and
-    resource_changes.change.actions is ["create"]
+	resource_changes.type is "azurerm_sql_firewall_rule" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
 }
 
 print("CIS 6.3: Ensure no SQL Databases allow ingress 0.0.0.0/0")
 
 deny_access_to_azure_services = rule {
-    all allSQLFirewallRules as _, firewall_rule {
-        firewall_rule.change.after.start_ip_address is not "0.0.0.0" and
-        firewall_rule.change.after.end_ip_address is not "0.0.0.0"
-    }
+	all allSQLFirewallRules as _, firewall_rule {
+		firewall_rule.change.after.start_ip_address is not "0.0.0.0" and
+			firewall_rule.change.after.end_ip_address is not "0.0.0.0"
+	}
 }
 
 deny_any_local_start_ip_address = rule {
-    all allSQLFirewallRules as _, firewall_rule {
-        firewall_rule.change.after.start_ip_address is not "0.0.0.0"
-    }
+	all allSQLFirewallRules as _, firewall_rule {
+		firewall_rule.change.after.start_ip_address is not "0.0.0.0"
+	}
 }
 
 main = rule {
-    deny_any_local_start_ip_address and
-    deny_access_to_azure_services
+	deny_any_local_start_ip_address and
+	deny_access_to_azure_services
 }

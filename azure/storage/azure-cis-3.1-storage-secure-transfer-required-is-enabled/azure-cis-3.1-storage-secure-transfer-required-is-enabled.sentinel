@@ -3,13 +3,13 @@ import "tfplan/v2" as tfplan
 print("CIS 3.1: Ensure that 'Secure transfer required' is set to Enabled")
 
 enable_https_traffic_only_is_true = rule {
-    all filter tfplan.resource_changes as _, resource_changes {
-        resource_changes.mode is "managed" and
-        resource_changes.type is "azurerm_storage_account" and
-        resource_changes.change.actions is ["create"]
-    } as _, rc {
-        rc.change.after.enable_https_traffic_only
-    }
+	all filter tfplan.resource_changes as _, resource_changes {
+		resource_changes.mode is "managed" and
+			resource_changes.type is "azurerm_storage_account" and
+			resource_changes.change.actions is ["create"]
+	} as _, rc {
+		rc.change.after.enable_https_traffic_only
+	}
 }
 
 main = rule {

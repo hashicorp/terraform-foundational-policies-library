@@ -1,14 +1,14 @@
 import "tfplan/v2" as tfplan
 import "strings"
 
-restricted_source_address_prefixes = ["*","internet","any","0.0.0.0","/0",]
+restricted_source_address_prefixes = ["*", "internet", "any", "0.0.0.0", "/0"]
 
 allNetworkSecurityGroups = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "azurerm_network_security_group" and
-	resource_changes.mode is "managed"
+		resource_changes.mode is "managed"
 }
 
-getNetworkSecurityGroupCompliance = func(groups, port){
+getNetworkSecurityGroupCompliance = func(groups, port) {
 	mapSecurityRules = {}
 	for groups as _, group {
 		for group.change.after.security_rule as sr {

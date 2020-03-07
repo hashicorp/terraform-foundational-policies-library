@@ -1,25 +1,25 @@
 import "tfplan/v2" as tfplan
 
 deniedVMExtensionTypes = [
-    "CustomScriptExtension",
-    "CustomScript",
-    "CustomScriptForLinux",
+	"CustomScriptExtension",
+	"CustomScript",
+	"CustomScriptForLinux",
 ]
 
 allVMExtensions = filter tfplan.resource_changes as _, resource_changes {
-    resource_changes.type is "azurerm_virtual_machine_extension" and
-	resource_changes.mode is "managed" and
-    resource_changes.change.actions is ["create"]
+	resource_changes.type is "azurerm_virtual_machine_extension" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
 }
 
 print("CIS 7.4: Ensure that only approved extensions are installed")
 
 deny_unsupported_virtual_machine_extensions = rule {
-    all allVMExtensions as _, extension {
-        extension.change.after.type not in deniedVMExtensionTypes
-    }
+	all allVMExtensions as _, extension {
+		extension.change.after.type not in deniedVMExtensionTypes
+	}
 }
 
 main = rule {
-    deny_unsupported_virtual_machine_extensions
+	deny_unsupported_virtual_machine_extensions
 }

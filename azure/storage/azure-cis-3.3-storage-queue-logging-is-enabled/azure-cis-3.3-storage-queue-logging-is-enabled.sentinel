@@ -3,17 +3,17 @@ import "tfplan/v2" as tfplan
 print("CIS 3.3: Ensure Storage logging is enabled for Queue service for read, write, and delete requests")
 
 queue_properties_logging_is_enabled = rule {
-    all filter tfplan.resource_changes as _, resource_changes {
-        resource_changes.mode is "managed" and
-        resource_changes.type is "azurerm_storage_account" and
-        resource_changes.change.actions is ["create"]
-    } as _, rc {
-        all rc.change.after.queue_properties as _, queue_properties {
-            queue_properties.logging[0].delete is true and
-            queue_properties.logging[0].read is true and
-            queue_properties.logging[0].write is true
-        }
-    }
+	all filter tfplan.resource_changes as _, resource_changes {
+		resource_changes.mode is "managed" and
+			resource_changes.type is "azurerm_storage_account" and
+			resource_changes.change.actions is ["create"]
+	} as _, rc {
+		all rc.change.after.queue_properties as _, queue_properties {
+			queue_properties.logging[0].delete is true and
+				queue_properties.logging[0].read is true and
+				queue_properties.logging[0].write is true
+		}
+	}
 }
 
 main = rule {

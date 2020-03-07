@@ -18,7 +18,7 @@ resource_changes = {
 				"type_handler_version": "2.2",
 			},
 			"after_unknown": {},
-			"before": null,
+			"before":        null,
 		},
 		"deposed":        "",
 		"index":          null,
