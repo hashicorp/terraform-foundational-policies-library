@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Format
-        run: sentinel fmt -check=true $(find . -name "*.sentinel" ! -path "*/testdata/*")
+        run: sentinel fmt -check=true $(find . -name "*.sentinel")
   testing:
     needs: format
     runs-on: ubuntu-latest
