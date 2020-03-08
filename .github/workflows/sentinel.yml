@@ -1,0 +1,22 @@
+name: sentinel
+on: [push]
+jobs:
+  sentinel-format:
+    runs-on: ubuntu-latest
+    container:
+      image: thrashr888/sentinel-simulator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Sentinel Format
+        run: sentinel fmt -check=true $(find . -name "*.sentinel")
+  sentinel-test:
+    needs: sentinel-format
+    runs-on: ubuntu-latest
+    container:
+      image: thrashr888/sentinel-simulator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Sentinel Test
+        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
