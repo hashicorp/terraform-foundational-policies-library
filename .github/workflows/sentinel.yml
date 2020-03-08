@@ -1,7 +1,7 @@
-name: HashiCorp Sentinel
+name: sentinel
 on: [push]
 jobs:
-  format:
+  sentinel-format:
     runs-on: ubuntu-latest
     container:
       image: thrashr888/sentinel-simulator
@@ -10,8 +10,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Sentinel Format
         run: sentinel fmt -check=true $(find . -name "*.sentinel")
-  testing:
-    needs: format
+  sentinel-test:
+    needs: sentinel-format
     runs-on: ubuntu-latest
     container:
       image: thrashr888/sentinel-simulator
