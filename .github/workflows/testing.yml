@@ -6,12 +6,10 @@ jobs:
     container:
       image: thrashr888/sentinel-simulator
     steps:
-      - name: Environment
-        run: printenv
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Format
-        run: sentinel fmt -check=false $(find . -name "*.sentinel" ! -path "*/testdata/*")
+        run: sentinel fmt -check=true $(find . -name "*.sentinel" ! -path "*/testdata/*")
   testing:
     needs: format
     runs-on: ubuntu-latest
