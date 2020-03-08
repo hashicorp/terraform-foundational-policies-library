@@ -1,0 +1,26 @@
+import "tfplan/v2" as tfplan
+
+allManagedDisks = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "azurerm_managed_disk" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.1: Ensure that managed disks are encrypted")
+
+deny_undefined_encryption_settings = rule {
+	all allManagedDisks as _, disk {
+		length(disk.change.after.encryption_settings) > 0
+	}
+}
+
+deny_unencrypted_managed_disk = rule {
+	all allManagedDisks as _, disk {
+		disk.change.after.encryption_settings[0].enabled is true
+	}
+}
+
+main = rule {
+	deny_undefined_encryption_settings and
+	deny_unencrypted_managed_disk
+}

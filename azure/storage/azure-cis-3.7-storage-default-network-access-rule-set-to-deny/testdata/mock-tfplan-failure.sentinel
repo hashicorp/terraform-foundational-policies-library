@@ -1,0 +1,77 @@
+resource_changes = {
+	"azurerm_storage_account.this": {
+		"address": "azurerm_storage_account.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"access_tier":                       "",
+				"account_encryption_source":         "Microsoft.Storage",
+				"account_kind":                      "Storage",
+				"account_replication_type":          "LRS",
+				"account_tier":                      "Standard",
+				"account_type":                      "Standard_LRS",
+				"custom_domain":                     [],
+				"enable_advanced_threat_protection": false,
+				"enable_blob_encryption":            true,
+				"enable_file_encryption":            true,
+				"enable_https_traffic_only":         true,
+				"identity":                          [],
+				"is_hns_enabled":                    false,
+				"location":                          "australiaeast",
+				"name":                              "656053124",
+				"network_rules": [
+					{
+						"bypass": [
+							"None",
+						],
+						"default_action":             "Allow",
+						"ip_rules":                   [],
+						"virtual_network_subnet_ids": [],
+					},
+				],
+				"queue_properties": [
+					{
+						"cors_rule": [],
+						"hour_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+						"logging": [
+							{
+								"delete":                true,
+								"read":                  true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+								"write":                 true,
+							},
+						],
+						"minute_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+					},
+				],
+				"resource_group_name": "sentinel-foundational-azure",
+			},
+			"after_unknown": {},
+			"before":        {},
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_storage_account",
+	},
+}

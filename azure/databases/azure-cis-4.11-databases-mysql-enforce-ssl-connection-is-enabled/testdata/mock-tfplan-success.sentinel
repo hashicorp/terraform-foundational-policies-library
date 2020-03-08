@@ -1,0 +1,37 @@
+resource_changes = {
+	"azurerm_mysql_server.this": {
+		"address": "azurerm_mysql_server.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"administrator_login":          "secretadmin",
+				"administrator_login_password": "password",
+				"location":                     "australiaeast",
+				"name":                         "test",
+				"resource_group_name":          "Sentinel-Foundations-Azure",
+				"sku_name":                     "B_Gen5_2",
+				"ssl_enforcement":              "Enabled",
+				"storage_profile": [
+					{
+						"auto_grow":             "Enabled",
+						"backup_retention_days": null,
+						"geo_redundant_backup":  null,
+						"storage_mb":            5120,
+					},
+				],
+				"version": "5.7",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_mysql_server",
+	},
+}

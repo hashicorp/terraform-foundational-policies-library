@@ -1,0 +1,31 @@
+resource_changes = {
+	"azurerm_virtual_machine_extension.encryption": {
+		"address": "azurerm_virtual_machine_extension.encryption",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"auto_upgrade_minor_version": null,
+				"name":               "hostname",
+				"protected_settings": null,
+				"publisher":          "Microsoft.Azure.Security",
+				"settings":           "",
+				"tags": {
+					"environment": "Production",
+				},
+				"type":                 "AzureDiskEncryption",
+				"type_handler_version": "2.2",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "encryption",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_virtual_machine_extension",
+	},
+}

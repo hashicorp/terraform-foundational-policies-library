@@ -1,0 +1,47 @@
+resource_changes = {
+	"azurerm_managed_disk.secure": {
+		"address": "azurerm_managed_disk.secure",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"create_option":          "Empty",
+				"disk_encryption_set_id": null,
+				"disk_size_gb":           1,
+				"encryption_settings": [
+					{
+						"disk_encryption_key": [
+							{},
+						],
+						"enabled": true,
+						"key_encryption_key": [
+							{},
+						],
+					},
+				],
+				"image_reference_id":   null,
+				"location":             "",
+				"name":                 "securedisk",
+				"os_type":              null,
+				"resource_group_name":  "Sentinel-Foundations-Azure",
+				"source_resource_id":   null,
+				"storage_account_id":   null,
+				"storage_account_type": "Standard_LRS",
+				"tags": {
+					"environment": "Production",
+				},
+				"zones": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "secure",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_managed_disk",
+	},
+}

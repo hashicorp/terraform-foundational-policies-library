@@ -1,0 +1,50 @@
+resource_changes = {
+	"azurerm_network_watcher_flow_log.this": {
+		"address": "azurerm_network_watcher_flow_log.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"enabled":              true,
+				"network_watcher_name": "accthisnw",
+				"resource_group_name":  "Sentinel-Foundations-Azure",
+				"retention_policy": [
+					{
+						"days":    7,
+						"enabled": true,
+					},
+				],
+				"traffic_analytics": [
+					{
+						"enabled":          true,
+						"workspace_region": "australiaeast",
+					},
+				],
+			},
+			"after_unknown": {
+				"id": true,
+				"network_security_group_id": true,
+				"retention_policy": [
+					{},
+				],
+				"storage_account_id": true,
+				"traffic_analytics": [
+					{
+						"workspace_id":          true,
+						"workspace_resource_id": true,
+					},
+				],
+				"version": true,
+			},
+			"before": null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_network_watcher_flow_log",
+	},
+}

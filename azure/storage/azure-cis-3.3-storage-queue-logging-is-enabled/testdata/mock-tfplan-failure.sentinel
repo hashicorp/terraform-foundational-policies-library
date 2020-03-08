@@ -1,0 +1,63 @@
+resource_changes = {
+	"azurerm_storage_account.this": {
+		"address": "azurerm_storage_account.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"account_encryption_source": "Microsoft.Storage",
+				"account_kind":              "Storage",
+				"account_replication_type":  "LRS",
+				"account_tier":              "Standard",
+				"custom_domain":             [],
+				"enable_blob_encryption":    true,
+				"enable_file_encryption":    true,
+				"enable_https_traffic_only": false,
+				"is_hns_enabled":            false,
+				"location":                  "australiaeast",
+				"name":                      "656053124",
+				"queue_properties": [
+					{
+						"cors_rule": [],
+						"hour_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+						"logging": [
+							{
+								"delete":                false,
+								"read":                  false,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+								"write":                 false,
+							},
+						],
+						"minute_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+					},
+				],
+				"resource_group_name": "sentinel-foundational-azure",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_storage_account",
+	},
+}

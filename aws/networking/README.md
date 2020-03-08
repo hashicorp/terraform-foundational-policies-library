@@ -10,7 +10,7 @@ Removing unfettered connectivity to remote console services, such as SSH, reduce
 
 ```hcl
 policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
-  source     = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
   enforcement_level    = "advisory"
 }
 ```

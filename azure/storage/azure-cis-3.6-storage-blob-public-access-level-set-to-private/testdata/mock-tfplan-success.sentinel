@@ -1,0 +1,24 @@
+resource_changes = {
+	"azurerm_storage_container.this": {
+		"address": "azurerm_storage_container.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"container_access_type": "private",
+				"name":                  "test",
+				"storage_account_name":  "656053124",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_storage_container",
+	},
+}
