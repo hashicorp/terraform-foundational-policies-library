@@ -1,5 +1,5 @@
 resource_changes = {
-		"module.vpc.aws_default_network_acl.this[0]": {
+	"module.vpc.aws_default_network_acl.this[0]": {
 		"address": "module.vpc.aws_default_network_acl.this[0]",
 		"change": {
 			"actions": [

@@ -4,11 +4,11 @@ import "tfplan/v2" as tfplan
 // Sentinel Filter Expression: https://docs.hashicorp.com/sentinel/language/collection-operations/#filter-expression
 public_ssh_acls = filter tfplan.resource_changes as _, rc {
 	rc.mode is "managed" and
-	rc.type is "aws_network_acl_rule" and
-	rc.change.actions is ["create"] and
-	rc.change.after.rule_action is "allow" and
-	rc.change.after.cidr_block is "0.0.0.0/0" and
-	rc.change.after.to_port is 22
+		rc.type is "aws_network_acl_rule" and
+		rc.change.actions is ["create"] and
+		rc.change.after.rule_action is "allow" and
+		rc.change.after.cidr_block is "0.0.0.0/0" and
+		rc.change.after.to_port is 22
 }
 
 // Debugging: https://docs.hashicorp.com/sentinel/writing/debugging/
