@@ -4,7 +4,7 @@ import "tfplan/v2" as tfplan
 // Sentinel Filter Expression: https://docs.hashicorp.com/sentinel/language/collection-operations/#filter-expression
 aws_default_network_acl = filter tfplan.resource_changes as _, rc {
 	rc.mode is "managed" and
-	rc.type is "aws_default_network_acl"
+		rc.type is "aws_default_network_acl"
 }
 
 // Debugging: https://docs.hashicorp.com/sentinel/writing/debugging/
