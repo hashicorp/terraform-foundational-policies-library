@@ -1,0 +1,57 @@
+import "tfplan/v2" as tfplan
+import "json"
+
+allUnsupportedMembers = [
+	"allUsers",
+	"allAuthenticatedUsers",
+]
+
+allBucketIAMBindings = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_storage_bucket_iam_binding" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allBucketIAMMembers = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_storage_bucket_iam_member" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allBucketIAMPolicies = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_storage_bucket_iam_policy" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 5.1: Ensure that Cloud Storage bucket is not anonymously or publicly accessible")
+
+deny_unsupported_bucket_iam_members = rule {
+	all allBucketIAMMembers as _, member {
+		member.change.after.member not in allUnsupportedMembers
+	}
+}
+
+deny_unsupported_bucket_iam_bindings = rule {
+	all allBucketIAMBindings as _, binding {
+		all binding.change.after.members as _, member {
+			member not in allUnsupportedMembers
+		}
+	}
+}
+
+deny_unsupported_bucket_iam_policies = rule {
+	all allBucketIAMPolicies as _, policy {
+		all json.unmarshal(policy.change.after.policy_data).bindings as _, binding {
+			all binding.members as _, member {
+				member not in allUnsupportedMembers
+			}
+		}
+	}
+}
+
+main = rule {
+	deny_unsupported_bucket_iam_policies and
+	deny_unsupported_bucket_iam_bindings and
+	deny_unsupported_bucket_iam_members
+}
