@@ -10,7 +10,7 @@ The secure transfer option enhances the security of a storage account by only al
 ### Configuration
 
 ```hcl
-policy "azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel" {
+policy "azure-cis-3.1-storage-secure-transfer-required-is-enabled" {
   source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.1-storage-secure-transfer-required-is-enabled/azure-cis-3.1-storage-secure-transfer-required-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
@@ -24,7 +24,7 @@ Storage Analytics logs contain detailed information about successful and failed 
 ### Configuration
 
 ```hcl
-policy "azure-cis-3.3-storage-queue-logging-is-enabled.sentinel" {
+policy "azure-cis-3.3-storage-queue-logging-is-enabled" {
   source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/storage/azure-cis-3.3-storage-queue-logging-is-enabled/azure-cis-3.3-storage-queue-logging-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
