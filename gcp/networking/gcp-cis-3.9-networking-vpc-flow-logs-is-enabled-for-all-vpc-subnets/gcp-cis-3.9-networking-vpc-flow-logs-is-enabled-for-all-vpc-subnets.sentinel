@@ -1,19 +1,19 @@
 import "tfplan/v2" as tfplan
 
 allSubnetworkResources = filter tfplan.resource_changes as _, resource_changes {
-    resource_changes.type is "google_compute_subnetwork" and
-	resource_changes.mode is "managed" and
-    resource_changes.change.actions is ["create"]
+	resource_changes.type is "google_compute_subnetwork" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
 }
 
 print("CIS 3.9: Ensure VPC Flow logs is enabled for every subnet in VPC Network")
 
 subnetwork_log_config_is_enabled = rule {
-    all allSubnetworkResources as _, subnetwork {
-        length(subnetwork.change.after.log_config) > 0
-    }
+	all allSubnetworkResources as _, subnetwork {
+		length(subnetwork.change.after.log_config) > 0
+	}
 }
 
 main = rule {
-    subnetwork_log_config_is_enabled
+	subnetwork_log_config_is_enabled
 }

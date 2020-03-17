@@ -1,19 +1,19 @@
 import "tfplan/v2" as tfplan
 
 allProjectResources = filter tfplan.resource_changes as _, resource_changes {
-    resource_changes.type is "google_project" and
-	resource_changes.mode is "managed" and
-    resource_changes.change.actions is ["create"]
+	resource_changes.type is "google_project" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
 }
 
 print("CIS 3.1: Ensure the default network does not exist in a project")
 
 deny_default_network_creation_in_project = rule {
-    all allProjectResources as _, project {
-        project.change.after.auto_create_network is false
-    }
+	all allProjectResources as _, project {
+		project.change.after.auto_create_network is false
+	}
 }
 
 main = rule {
-    deny_default_network_creation_in_project
+	deny_default_network_creation_in_project
 }
