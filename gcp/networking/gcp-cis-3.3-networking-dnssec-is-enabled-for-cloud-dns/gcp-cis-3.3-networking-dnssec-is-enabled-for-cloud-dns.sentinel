@@ -1,0 +1,21 @@
+import "tfplan/v2" as tfplan
+
+allDNSManagedZones = filter tfplan.resource_changes as _, resource_changes {
+    resource_changes.type is "google_dns_managed_zone" and
+	resource_changes.mode is "managed" and
+    resource_changes.change.actions is ["create"]
+}
+
+print("3.3: Ensure that DNSSEC is enabled for Cloud DNS")
+
+deny_insecure_dns_managed_zones = rule {
+    all allDNSManagedZones as _, zone {
+        all zone.change.after.dnssec_config as _, dnssec_config {
+            dnssec_config.state is "on"
+        }
+    }
+}
+
+main = rule {
+    deny_insecure_dns_managed_zones
+}

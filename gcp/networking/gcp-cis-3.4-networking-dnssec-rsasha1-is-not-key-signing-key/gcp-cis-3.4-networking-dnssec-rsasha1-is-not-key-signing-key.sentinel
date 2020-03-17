@@ -1,0 +1,25 @@
+import "tfplan/v2" as tfplan
+
+allDNSManagedZones = filter tfplan.resource_changes as _, resource_changes {
+    resource_changes.type is "google_dns_managed_zone" and
+	resource_changes.mode is "managed" and
+    resource_changes.change.actions is ["create"]
+}
+
+print("CIS 3.4: Ensure that RSASHA1 is not used for key-signing key in Cloud DNS DNSSEC")
+
+deny_rsasha1_key_signing = rule {
+    all allDNSManagedZones as _, zone {
+        all zone.change.after.dnssec_config as _, dnssec_config {
+            all filter dnssec_config.default_key_specs as default_key_spec {
+                default_key_spec.key_type is "keySigning"
+            } as dks {
+                dks.algorithm is not "rsasha1"
+            }
+        }
+    }
+}
+
+main = rule {
+    deny_rsasha1_key_signing
+}
