@@ -1,0 +1,25 @@
+import "tfplan/v2" as tfplan
+
+allSQLDatabaseResources = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_sql_database_instance" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 6.1: Ensure that Cloud SQL database instance requires all incoming connections to use SSL")
+
+ip_configuration_require_ssl_is_true = rule {
+	all filter allSQLDatabaseResources as _, resources {
+		resources.change.after.database_version not contains "SQLSERVER"
+	} as _, instances {
+		all instances.change.after.settings as _, setting {
+			all setting.ip_configuration as _, config {
+				config.require_ssl is true
+			}
+		}
+	}
+}
+
+main = rule {
+	ip_configuration_require_ssl_is_true
+}

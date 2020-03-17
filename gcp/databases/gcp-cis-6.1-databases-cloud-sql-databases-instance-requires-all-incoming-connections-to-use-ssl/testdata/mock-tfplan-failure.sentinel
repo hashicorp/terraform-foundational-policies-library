@@ -1,0 +1,197 @@
+resource_changes = {
+	"google_sql_database_instance.mysql56": {
+		"address": "google_sql_database_instance.mysql56",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"database_version": "MYSQL_5_6",
+				"name":             "db",
+				"region":           "us-central1",
+				"settings": [
+					{
+						"authorized_gae_applications": null,
+						"database_flags":              [],
+						"disk_autoresize":             true,
+						"disk_type":                   "PD_HDD",
+						"ip_configuration": [
+							{
+								"authorized_networks": [
+									{
+										"expiration_time": "",
+										"name":            "P1",
+										"value":           "172.16.12.0/24",
+									},
+									{
+										"expiration_time": "",
+										"name":            "P2",
+										"value":           "172.16.0.0/16",
+									},
+								],
+								"private_network": null,
+								"require_ssl":     false,
+							},
+						],
+						"maintenance_window": [],
+						"pricing_plan":       "PER_USE",
+						"replication_type":   "SYNCHRONOUS",
+						"tier":               "db-f1-micro",
+						"user_labels":        null,
+					},
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "mysql56",
+		"provider_name":  "google",
+		"type":           "google_sql_database_instance",
+	},
+	"google_sql_database_instance.mysql57": {
+		"address": "google_sql_database_instance.mysql57",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"database_version": "MYSQL_5_7",
+				"name":             "db",
+				"region":           "us-central1",
+				"settings": [
+					{
+						"authorized_gae_applications": null,
+						"database_flags":              [],
+						"disk_autoresize":             true,
+						"disk_type":                   "PD_HDD",
+						"ip_configuration": [
+							{
+								"authorized_networks": [
+									{
+										"expiration_time": "",
+										"name":            "F1",
+										"value":           "0.0.0.0",
+									},
+								],
+								"private_network": null,
+								"require_ssl":     false,
+							},
+						],
+						"maintenance_window": [],
+						"pricing_plan":       "PER_USE",
+						"replication_type":   "SYNCHRONOUS",
+						"tier":               "db-f1-micro",
+						"user_labels":        null,
+					},
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "mysql57",
+		"provider_name":  "google",
+		"type":           "google_sql_database_instance",
+	},
+	"google_sql_database_instance.pgsql11": {
+		"address": "google_sql_database_instance.pgsql11",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"database_version": "POSTGRES_11",
+				"name":             "db",
+				"region":           "us-central1",
+				"settings": [
+					{
+						"authorized_gae_applications": null,
+						"database_flags":              [],
+						"disk_autoresize":             true,
+						"disk_type":                   "PD_HDD",
+						"ip_configuration": [
+							{
+								"authorized_networks": [],
+								"private_network":     null,
+								"require_ssl":         true,
+							},
+						],
+						"maintenance_window": [],
+						"pricing_plan":       "PER_USE",
+						"replication_type":   "SYNCHRONOUS",
+						"tier":               "db-f1-micro",
+						"user_labels":        null,
+					},
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "pgsql11",
+		"provider_name":  "google",
+		"type":           "google_sql_database_instance",
+	},
+	"google_sql_database_instance.pgsql96": {
+		"address": "google_sql_database_instance.pgsql96",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"database_version": "POSTGRES_9_6",
+				"name":             "db",
+				"region":           "us-central1",
+				"settings": [
+					{
+						"authorized_gae_applications": null,
+						"database_flags":              [],
+						"disk_autoresize":             true,
+						"disk_type":                   "PD_HDD",
+						"ip_configuration": [
+							{
+								"authorized_networks": [
+									{
+										"expiration_time": "",
+										"name":            "P2",
+										"value":           "172.16.0.0/0",
+									},
+								],
+								"private_network": null,
+								"require_ssl":     false,
+							},
+						],
+						"maintenance_window": [],
+						"pricing_plan":       "PER_USE",
+						"replication_type":   "SYNCHRONOUS",
+						"tier":               "db-f1-micro",
+						"user_labels":        null,
+					},
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "pgsql96",
+		"provider_name":  "google",
+		"type":           "google_sql_database_instance",
+	},
+}

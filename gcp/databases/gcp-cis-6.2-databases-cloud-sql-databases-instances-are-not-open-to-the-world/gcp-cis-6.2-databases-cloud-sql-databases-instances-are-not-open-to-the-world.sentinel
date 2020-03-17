@@ -1,0 +1,26 @@
+import "tfplan/v2" as tfplan
+
+allSQLDatabaseResources = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_sql_database_instance" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 6.2: Ensure that Cloud SQL database Instances are not open to the world")
+
+ip_configuration_authorized_networks = rule {
+	all allSQLDatabaseResources as _, resources {
+		all resources.change.after.settings as _, settings {
+			all settings.ip_configuration as _, ip_configuration {
+				all ip_configuration.authorized_networks as _, authorized_networks {
+					authorized_networks.value is not "0.0.0.0" and
+						authorized_networks.value not contains "/0"
+				}
+			}
+		}
+	}
+}
+
+main = rule {
+	ip_configuration_authorized_networks
+}
