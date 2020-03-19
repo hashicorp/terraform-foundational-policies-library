@@ -1,0 +1,28 @@
+resource_changes = {
+	"google_project.my_project": {
+		"address": "google_project.my_project",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"auto_create_network": false,
+				"billing_account":     null,
+				"labels":              null,
+				"name":                "My Project",
+				"org_id":              "1234567",
+				"project_id":          "your-project-id",
+				"timeouts":            null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "my_project",
+		"provider_name":  "google",
+		"type":           "google_project",
+	},
+}

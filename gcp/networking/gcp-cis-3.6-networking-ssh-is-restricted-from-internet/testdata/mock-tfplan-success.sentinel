@@ -1,0 +1,134 @@
+resource_changes = {
+	"google_compute_firewall.http": {
+		"address": "google_compute_firewall.http",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"allow": [
+					{
+						"ports": [
+							"80",
+						],
+						"protocol": "tcp",
+					},
+				],
+				"deny":           [],
+				"description":    null,
+				"disabled":       null,
+				"enable_logging": null,
+				"name":           "this-firewall-http",
+				"network":        "test-network",
+				"priority":       1000,
+				"source_ranges": [
+					"0.0.0.0/0",
+				],
+				"source_service_accounts": null,
+				"source_tags":             null,
+				"target_service_accounts": null,
+				"target_tags": [
+					"this-firewall-http",
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "http",
+		"provider_name":  "google",
+		"type":           "google_compute_firewall",
+	},
+	"google_compute_firewall.https": {
+		"address": "google_compute_firewall.https",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"allow": [
+					{
+						"ports": [
+							"443",
+						],
+						"protocol": "tcp",
+					},
+				],
+				"deny":           [],
+				"description":    null,
+				"disabled":       null,
+				"enable_logging": null,
+				"name":           "this-firewall-https",
+				"network":        "test-network",
+				"priority":       1000,
+				"source_ranges": [
+					"0.0.0.0/0",
+				],
+				"source_service_accounts": null,
+				"source_tags":             null,
+				"target_service_accounts": null,
+				"target_tags": [
+					"this-firewall-https",
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "https",
+		"provider_name":  "google",
+		"type":           "google_compute_firewall",
+	},
+	"google_compute_firewall.ssh-pass": {
+		"address": "google_compute_firewall.ssh-pass",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"allow": [
+					{
+						"ports": [
+							"22",
+						],
+						"protocol": "tcp",
+					},
+				],
+				"deny":           [],
+				"description":    null,
+				"disabled":       null,
+				"enable_logging": null,
+				"name":           "pass-firewall-ssh",
+				"network":        "test-network",
+				"priority":       1000,
+				"source_ranges": [
+					"172.16.0.0/0",
+				],
+				"source_service_accounts": null,
+				"source_tags":             null,
+				"target_service_accounts": null,
+				"target_tags": [
+					"pass-firewall-ssh",
+				],
+				"timeouts": null,
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "ssh-pass",
+		"provider_name":  "google",
+		"type":           "google_compute_firewall",
+	},
+}

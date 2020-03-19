@@ -1,0 +1,31 @@
+import "tfplan/v2" as tfplan
+
+allUnsupportedSourceRanges = [
+	"/0",
+	"0.0.0.0",
+	"0.0.0.0/0",
+]
+
+allFirewallResources = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_firewall" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 3.6: Ensure that SSH access is restricted from the internet")
+
+deny_public_ssh_access = rule {
+	all allFirewallResources as _, firewall {
+		all filter firewall.change.after.allow as _, allow {
+			allow.ports contains "22"
+		} as _ {
+			all firewall.change.after.source_ranges as _, range {
+				range not in allUnsupportedSourceRanges
+			}
+		}
+	}
+}
+
+main = rule {
+	deny_public_ssh_access
+}
