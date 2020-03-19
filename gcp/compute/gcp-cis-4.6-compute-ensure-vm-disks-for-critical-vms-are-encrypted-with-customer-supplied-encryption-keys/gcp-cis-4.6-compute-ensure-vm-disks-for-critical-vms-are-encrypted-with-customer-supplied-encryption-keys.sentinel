@@ -1,0 +1,76 @@
+import "tfplan/v2" as tfplan
+import "types"
+
+allComputeDisks = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_disk" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_instance" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_instance_template" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+getDiskEncryptionStatus = func(property) {
+	case  {
+		when types.type_of(property.disk_encryption_key_raw) is "null":
+			if keys(property) contains "kms_key_self_link" {
+				return length(property.kms_key_self_link) != 0
+			} else {
+				return false
+			}
+		when types.type_of(property.disk_encryption_key_raw) is "string":
+			return length(property.disk_encryption_key_raw) != 0
+		when types.type_of(property.disk_encryption_key) is "list":
+			return length(property.disk_encryption_key) != 0
+		else:
+			return false
+	}
+}
+
+print("CIS 4.6: Ensure VM disks for critical VMs are encrypted with Customer-Supplied Encryption Keys (CSEK)")
+
+disk_encryption_is_enabled_in_compute_disks = rule {
+	all allComputeDisks as _, disk {
+		length(disk.change.after.disk_encryption_key) > 0
+	}
+}
+
+disk_encryption_is_enabled_in_compute_instance_boot_disk = rule {
+	all allComputeInstances as _, instance {
+		all instance.change.after.boot_disk as _, boot_disk {
+			getDiskEncryptionStatus(boot_disk)
+		}
+	}
+}
+
+disk_encryption_is_enabled_in_compute_instance_attached_disk = rule {
+	all allComputeInstances as _, instance {
+		all instance.change.after.attached_disk as _, attached_disk {
+			getDiskEncryptionStatus(attached_disk)
+		}
+	}
+}
+
+disk_encryption_is_enabled_in_compute_instance_template_disk = rule {
+	all allComputeInstanceTemplates as _, template {
+		all template.change.after.disk as _, disk {
+			getDiskEncryptionStatus(disk)
+		}
+	}
+}
+
+main = rule {
+	disk_encryption_is_enabled_in_compute_disks and
+	disk_encryption_is_enabled_in_compute_instance_boot_disk and
+	disk_encryption_is_enabled_in_compute_instance_attached_disk and
+	disk_encryption_is_enabled_in_compute_instance_template_disk
+}
