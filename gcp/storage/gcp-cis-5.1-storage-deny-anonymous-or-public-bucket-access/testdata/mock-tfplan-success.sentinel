@@ -1,0 +1,69 @@
+resource_changes = {
+	"google_storage_bucket_iam_binding.this": {
+		"address": "google_storage_bucket_iam_binding.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"bucket": "example-bucket",
+				"members": [
+					"user:user@example.com",
+				],
+				"role": "roles/storage.admin",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google",
+		"type":           "google_storage_bucket_iam_binding",
+	},
+	"google_storage_bucket_iam_member.user": {
+		"address": "google_storage_bucket_iam_member.user",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"bucket": "example-bucket",
+				"member": "user:user@example.com",
+				"role":   "roles/storage.admin",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "user",
+		"provider_name":  "google",
+		"type":           "google_storage_bucket_iam_member",
+	},
+	"google_storage_bucket_iam_policy.this": {
+		"address": "google_storage_bucket_iam_policy.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"bucket":      "example-bucket",
+				"policy_data": "{\"bindings\":[{\"members\":[\"user:user@example.com\"],\"role\":\"roles/storage.admin\"}]}",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google",
+		"type":           "google_storage_bucket_iam_policy",
+	},
+}
