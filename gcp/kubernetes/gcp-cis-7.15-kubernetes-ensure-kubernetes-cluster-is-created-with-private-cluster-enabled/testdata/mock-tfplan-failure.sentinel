@@ -1,0 +1,182 @@
+resource_changes = {
+	"google_container_cluster.this": {
+		"address": "google_container_cluster.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"addons_config": [
+					{
+						"network_policy_config": [
+							{
+								"disabled": false,
+							},
+						],
+					},
+				],
+				"description":                 null,
+				"enable_binary_authorization": false,
+				"enable_intranode_visibility": false,
+				"enable_kubernetes_alpha":     false,
+				"enable_legacy_abac":          false,
+				"enable_shielded_nodes":       false,
+				"enable_tpu":                  false,
+				"initial_node_count":          1,
+				"ip_allocation_policy": [
+					{
+						"cluster_secondary_range_name":  "pods",
+						"services_secondary_range_name": "services",
+					},
+				],
+				"location":           "australia-southeast1",
+				"logging_service":    null,
+				"maintenance_policy": [],
+				"master_auth": [
+					{
+						"client_certificate_config": [
+							{
+								"issue_client_certificate": true,
+							},
+						],
+						"password": "",
+						"username": "",
+					},
+				],
+				"master_authorized_networks_config": [
+					{
+						"cidr_blocks": [
+							{
+								"cidr_block":   "10.0.0.0/8",
+								"display_name": "10x",
+							},
+							{
+								"cidr_block":   "172.16.0.0/12",
+								"display_name": "172x",
+							},
+							{
+								"cidr_block":   "192.168.0.0/16",
+								"display_name": "192x",
+							},
+						],
+					},
+				],
+				"min_master_version": null,
+				"monitoring_service": null,
+				"name":               "this-cluster",
+				"network":            "default",
+				"network_policy": [
+					{
+						"enabled":  true,
+						"provider": null,
+					},
+				],
+				"node_config": [
+					{
+						"boot_disk_kms_key": null,
+						"image_type":        "COS",
+						"labels": {
+							"foo": "bar",
+						},
+						"machine_type": "n1-standard-1",
+						"metadata": {
+							"disable-legacy-endpoints": "true",
+						},
+						"min_cpu_platform": null,
+						"oauth_scopes": [
+							"https://www.googleapis.com/auth/devstorage.read_only",
+							"https://www.googleapis.com/auth/logging.write",
+							"https://www.googleapis.com/auth/monitoring",
+						],
+						"preemptible":     true,
+						"sandbox_config":  [],
+						"service_account": "node-service-account-field",
+						"tags":            null,
+						"workload_metadata_config": [],
+					},
+				],
+				"pod_security_policy_config": [
+					{
+						"enabled": true,
+					},
+				],
+				"private_cluster_config":       [],
+				"remove_default_node_pool":     true,
+				"resource_labels":              null,
+				"resource_usage_export_config": [],
+				"timeouts": {
+					"create": "30m",
+					"delete": null,
+					"update": "40m",
+				},
+				"vertical_pod_autoscaling": [],
+				"workload_identity_config": [],
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google-beta",
+		"type":           "google_container_cluster",
+	},
+	"google_container_node_pool.this": {
+		"address": "google_container_node_pool.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"autoscaling": [],
+				"cluster":     "this-cluster",
+				"location":    "australia-southeast1",
+				"management": [
+					{
+						"auto_repair":  true,
+						"auto_upgrade": true,
+					},
+				],
+				"name": "this-pool",
+				"node_config": [
+					{
+						"boot_disk_kms_key": null,
+						"image_type":        "COS",
+						"labels": {
+							"foo": "bar",
+						},
+						"machine_type": "n1-standard-1",
+						"metadata": {
+							"disable-legacy-endpoints": "true",
+						},
+						"min_cpu_platform": null,
+						"oauth_scopes": [
+							"https://www.googleapis.com/auth/devstorage.read_only",
+							"https://www.googleapis.com/auth/logging.write",
+							"https://www.googleapis.com/auth/monitoring",
+						],
+						"preemptible":     true,
+						"sandbox_config":  [],
+						"service_account": "node-service-account-field",
+						"tags":            null,
+						"workload_metadata_config": [],
+					},
+				],
+				"node_count":       1,
+				"timeouts":         null,
+				"upgrade_settings": [],
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google-beta",
+		"type":           "google_container_node_pool",
+	},
+}

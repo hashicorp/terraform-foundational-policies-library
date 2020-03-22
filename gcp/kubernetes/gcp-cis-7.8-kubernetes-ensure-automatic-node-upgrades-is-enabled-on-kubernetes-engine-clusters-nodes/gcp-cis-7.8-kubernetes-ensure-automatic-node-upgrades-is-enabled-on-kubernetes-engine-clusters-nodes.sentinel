@@ -1,0 +1,21 @@
+import "tfplan/v2" as tfplan
+
+allNodePools = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_node_pool" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.8: Ensure Automatic node upgrades is enabled on Kubernetes Engine Clusters nodes")
+
+node_auto_upgrade_is_enabled = rule {
+	all allNodePools as _, pool {
+		all pool.change.after.management as _, management {
+			management.auto_upgrade is true
+		}
+	}
+}
+
+main = rule {
+	node_auto_upgrade_is_enabled
+}

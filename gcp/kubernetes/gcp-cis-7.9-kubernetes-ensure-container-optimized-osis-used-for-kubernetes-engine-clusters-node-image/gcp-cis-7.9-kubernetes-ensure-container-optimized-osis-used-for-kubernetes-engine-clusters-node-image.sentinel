@@ -1,0 +1,42 @@
+import "tfplan/v2" as tfplan
+import "strings"
+
+supportedImageTypes = [
+	"cos",
+	"cos_containerd",
+]
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allNodePools = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_node_pool" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.9: Ensure Container-Optimized OS (cos) is used for Kubernetes Engine Clusters Node image")
+
+cluster_node_config_image_type_is_cos = rule {
+	all allContainerClusters as _, cluster {
+		all cluster.change.after.node_config as _, node_config {
+			strings.to_lower(node_config.image_type) in supportedImageTypes
+		}
+	}
+}
+
+pool_node_config_image_type_is_cos = rule {
+	all allNodePools as _, pool {
+		all pool.change.after.node_config as _, node_config {
+			strings.to_lower(node_config.image_type) in supportedImageTypes
+		}
+	}
+}
+
+main = rule {
+	cluster_node_config_image_type_is_cos and
+	pool_node_config_image_type_is_cos
+}

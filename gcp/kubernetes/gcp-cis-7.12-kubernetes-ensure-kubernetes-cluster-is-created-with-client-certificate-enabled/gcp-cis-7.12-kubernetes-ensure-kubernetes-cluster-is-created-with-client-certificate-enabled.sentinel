@@ -1,0 +1,23 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.12: Ensure Kubernetes Cluster is created with Client Certificate enabled")
+
+client_certificate_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		all cluster.change.after.master_auth as _, master_auth {
+			all master_auth.client_certificate_config as _, client_certificate_config {
+				client_certificate_config.issue_client_certificate is true
+			}
+		}
+	}
+}
+
+main = rule {
+	client_certificate_is_enabled
+}

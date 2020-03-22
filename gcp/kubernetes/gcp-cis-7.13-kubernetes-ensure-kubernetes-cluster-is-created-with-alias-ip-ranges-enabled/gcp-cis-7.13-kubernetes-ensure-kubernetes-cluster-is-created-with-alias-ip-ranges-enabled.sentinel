@@ -1,0 +1,20 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.13: Ensure Kubernetes Cluster is created with Alias IP ranges enabled")
+
+cluster_alias_ip_ranges_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		keys(cluster.change.after) contains "ip_allocation_policy" and
+			length(cluster.change.after.ip_allocation_policy) > 0
+	}
+}
+
+main = rule {
+	cluster_alias_ip_ranges_is_enabled
+}

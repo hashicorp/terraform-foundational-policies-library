@@ -1,0 +1,21 @@
+import "tfplan/v2" as tfplan
+
+allNodePools = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_node_pool" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.7: Ensure `Automatic node repair` is enabled for Kubernetes Clusters")
+
+node_auto_repair_is_enabled = rule {
+	all allNodePools as _, pool {
+		all pool.change.after.management as _, management {
+			management.auto_repair is true
+		}
+	}
+}
+
+main = rule {
+	node_auto_repair_is_enabled
+}
