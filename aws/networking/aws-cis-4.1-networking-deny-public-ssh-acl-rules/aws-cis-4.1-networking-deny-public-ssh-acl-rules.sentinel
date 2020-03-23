@@ -1,12 +1,12 @@
 import "tfplan/v2" as tfplan
 
-public_ssh_acls = filter tfplan.resource_changes as _, rc {
-	rc.mode is "managed" and
-		rc.type is "aws_network_acl_rule" and
-		rc.change.actions is ["create"] and
-		rc.change.after.rule_action is "allow" and
-		rc.change.after.cidr_block is "0.0.0.0/0" and
-		rc.change.after.to_port is 22
+public_ssh_acls = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "aws_network_acl_rule" and
+		resource_changes.change.actions is ["create"] and
+		resource_changes.change.after.rule_action is "allow" and
+		resource_changes.change.after.cidr_block is "0.0.0.0/0" and
+		resource_changes.change.after.to_port is 22
 }
 
 print("CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 22")
