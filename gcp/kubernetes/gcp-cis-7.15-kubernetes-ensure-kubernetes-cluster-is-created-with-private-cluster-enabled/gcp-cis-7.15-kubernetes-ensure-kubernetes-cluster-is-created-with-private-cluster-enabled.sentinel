@@ -1,0 +1,20 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.15: Ensure Kubernetes Cluster is created with Private cluster enabled")
+
+private_cluster_config_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		keys(cluster.change.after) contains "private_cluster_config" and
+			length(cluster.change.after.private_cluster_config) > 0
+	}
+}
+
+main = rule {
+	private_cluster_config_is_enabled
+}

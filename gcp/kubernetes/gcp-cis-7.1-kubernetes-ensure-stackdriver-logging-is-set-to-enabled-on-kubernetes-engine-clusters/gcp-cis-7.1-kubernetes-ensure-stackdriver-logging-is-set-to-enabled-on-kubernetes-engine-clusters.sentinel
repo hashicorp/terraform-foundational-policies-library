@@ -1,0 +1,24 @@
+import "tfplan/v2" as tfplan
+
+supportedLoggingServices = [
+	"logging.googleapis.com/kubernetes",
+	"logging.googleapis.com",
+]
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.1: Ensure Stackdriver Logging is set to Enabled on Kubernetes Engine Clusters")
+
+logging_service_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		cluster.change.after.logging_service in supportedLoggingServices
+	}
+}
+
+main = rule {
+	logging_service_is_enabled
+}

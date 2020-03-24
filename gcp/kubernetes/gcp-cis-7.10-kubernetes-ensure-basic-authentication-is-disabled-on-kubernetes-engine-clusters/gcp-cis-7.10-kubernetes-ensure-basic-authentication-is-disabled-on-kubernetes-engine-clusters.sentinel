@@ -1,0 +1,22 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.10: Ensure Basic Authentication is disabled on Kubernetes Engine Clusters")
+
+basic_authentication_is_disabled = rule {
+	all allContainerClusters as _, cluster {
+		all cluster.change.after.master_auth as _, master_auth {
+			keys(master_auth) not contains "username" and
+				keys(master_auth) not contains "password"
+		}
+	}
+}
+
+main = rule {
+	basic_authentication_is_disabled
+}

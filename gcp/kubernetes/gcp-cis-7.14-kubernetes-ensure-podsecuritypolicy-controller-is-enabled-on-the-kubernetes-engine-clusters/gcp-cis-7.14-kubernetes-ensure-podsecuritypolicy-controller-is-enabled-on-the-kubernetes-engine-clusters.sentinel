@@ -1,0 +1,21 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.14: Ensure PodSecurityPolicy controller is enabled on the Kubernetes Engine Clusters")
+
+pod_security_policy_controller_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		all cluster.change.after.pod_security_policy_config as _, pod_security_policy_config {
+			pod_security_policy_config.enabled is true
+		}
+	}
+}
+
+main = rule {
+	pod_security_policy_controller_is_enabled
+}

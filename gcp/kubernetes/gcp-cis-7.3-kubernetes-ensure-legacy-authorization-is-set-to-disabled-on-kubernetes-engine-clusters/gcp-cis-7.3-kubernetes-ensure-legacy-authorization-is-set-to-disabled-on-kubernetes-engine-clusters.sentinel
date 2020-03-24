@@ -1,0 +1,19 @@
+import "tfplan/v2" as tfplan
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.3: Ensure Legacy Authorization is set to Disabled on Kubernetes Engine Clusters")
+
+enable_legacy_abac_is_disabled = rule {
+	all allContainerClusters as _, cluster {
+		cluster.change.after.enable_legacy_abac is false
+	}
+}
+
+main = rule {
+	enable_legacy_abac_is_disabled
+}

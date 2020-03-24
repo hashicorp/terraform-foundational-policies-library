@@ -1,0 +1,24 @@
+import "tfplan/v2" as tfplan
+
+supportedMonitoringServices = [
+	"monitoring.googleapis.com/kubernetes",
+	"monitoring.googleapis.com",
+]
+
+allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_container_cluster" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 7.2: Ensure Stackdriver Monitoring is set to Enabled on Kubernetes Engine Clusters")
+
+monitoring_service_is_enabled = rule {
+	all allContainerClusters as _, cluster {
+		cluster.change.after.monitoring_service in supportedMonitoringServices
+	}
+}
+
+main = rule {
+	monitoring_service_is_enabled
+}
