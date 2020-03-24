@@ -1,0 +1,221 @@
+resource_changes = {
+	"google_compute_instance.this": {
+		"address": "google_compute_instance.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"allow_stopping_for_update": null,
+				"attached_disk": [
+					{
+						"disk_encryption_key_raw": null,
+						"kms_key_self_link":       "projects/tfe-multicloudinaction/locations/australia-southeast1/keyRings/tfe-multicloudinaction-ring/cryptoKeys/disk-crypto-key",
+						"mode":                    "READ_WRITE",
+						"source":                  "this",
+					},
+					{
+						"disk_encryption_key_raw": null,
+						"mode":   "READ_WRITE",
+						"source": "that",
+					},
+				],
+				"boot_disk": [
+					{
+						"auto_delete":             true,
+						"disk_encryption_key_raw": null,
+						"initialize_params": [
+							{
+								"image": "debian-cloud/debian-9",
+							},
+						],
+						"kms_key_self_link": "projects/tfe-multicloudinaction/locations/australia-southeast1/keyRings/tfe-multicloudinaction-ring/cryptoKeys/disk-crypto-key",
+						"mode":              "READ_WRITE",
+					},
+				],
+				"can_ip_forward":      false,
+				"deletion_protection": false,
+				"description":         null,
+				"desired_status":      null,
+				"enable_display":      null,
+				"hostname":            null,
+				"labels":              null,
+				"machine_type":        "n1-standard-1",
+				"metadata": {
+					"block-project-ssh-keys": "false",
+					"enable-oslogin":         "false",
+					"serial-port-enable":     "true",
+				},
+				"metadata_startup_script": "echo hi > /test.txt",
+				"name": "test",
+				"network_interface": [
+					{
+						"access_config": [
+							{
+								"public_ptr_domain_name": null,
+							},
+						],
+						"alias_ip_range": [],
+						"network":        "default",
+					},
+				],
+				"scratch_disk": [
+					{
+						"interface": "SCSI",
+					},
+				],
+				"service_account": [
+					{
+						"scopes": [
+							"https://www.googleapis.com/auth/compute.readonly",
+							"https://www.googleapis.com/auth/devstorage.read_only",
+							"https://www.googleapis.com/auth/userinfo.email",
+						],
+					},
+				],
+				"shielded_instance_config": [],
+				"tags": [
+					"bar",
+					"foo",
+				],
+				"timeouts": null,
+				"zone":     "australia-southeast1-a",
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google",
+		"type":           "google_compute_instance",
+	},
+	"google_compute_instance_template.this": {
+		"address": "google_compute_instance_template.this",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"can_ip_forward": false,
+				"description":    "This template is used to create app server instances.",
+				"disk": [
+					{
+						"auto_delete": true,
+						"boot":        true,
+						"disk_encryption_key": [
+							{
+								"kms_key_self_link": "projects/tfe-multicloudinaction/locations/australia-southeast1/keyRings/tfe-multicloudinaction-ring/cryptoKeys/disk-crypto-key",
+							},
+						],
+						"disk_name":    null,
+						"disk_size_gb": null,
+						"labels":       null,
+						"source":       null,
+						"source_image": "debian-cloud/debian-9",
+					},
+					{
+						"auto_delete": false,
+						"boot":        false,
+						"disk_encryption_key": [
+							{
+								"kms_key_self_link": "projects/tfe-multicloudinaction/locations/australia-southeast1/keyRings/tfe-multicloudinaction-ring/cryptoKeys/disk-crypto-key",
+							},
+						],
+						"disk_name":    null,
+						"disk_size_gb": null,
+						"labels":       null,
+						"source":       "this",
+					},
+					{
+						"auto_delete":         false,
+						"boot":                false,
+						"disk_encryption_key": [],
+						"disk_name":           null,
+						"disk_size_gb":        null,
+						"labels":              null,
+						"source":              "that",
+					},
+					{
+						"auto_delete": false,
+						"boot":        false,
+						"disk_encryption_key": [
+							{
+								"kms_key_self_link": "projects/tfe-multicloudinaction/locations/australia-southeast1/keyRings/tfe-multicloudinaction-ring/cryptoKeys/disk-crypto-key",
+							},
+						],
+						"disk_name":    null,
+						"disk_size_gb": null,
+						"labels":       null,
+						"source":       "where",
+					},
+					{
+						"auto_delete":         false,
+						"boot":                false,
+						"disk_encryption_key": [],
+						"disk_name":           null,
+						"disk_size_gb":        null,
+						"labels":              null,
+						"source":              "at",
+					},
+				],
+				"enable_display":       null,
+				"guest_accelerator":    [],
+				"instance_description": "description assigned to instances",
+				"labels": {
+					"environment": "dev",
+				},
+				"machine_type": "n1-standard-1",
+				"metadata": {
+					"block-project-ssh-keys": "false",
+					"enable-oslogin":         "false",
+					"serial-port-enable":     "true",
+				},
+				"metadata_startup_script": null,
+				"min_cpu_platform":        null,
+				"name":                    "appserver-template",
+				"network_interface": [
+					{
+						"access_config":  [],
+						"alias_ip_range": [],
+						"network":        "default",
+						"network_ip":     null,
+					},
+				],
+				"scheduling": [
+					{
+						"automatic_restart":   true,
+						"node_affinities":     [],
+						"on_host_maintenance": "MIGRATE",
+						"preemptible":         false,
+					},
+				],
+				"service_account": [
+					{
+						"scopes": [
+							"https://www.googleapis.com/auth/compute.readonly",
+							"https://www.googleapis.com/auth/devstorage.read_only",
+							"https://www.googleapis.com/auth/userinfo.email",
+						],
+					},
+				],
+				"shielded_instance_config": [],
+				"tags": [
+					"bar",
+					"foo",
+				],
+			},
+			"after_unknown": {},
+			"before":        null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "this",
+		"provider_name":  "google",
+		"type":           "google_compute_instance_template",
+	},
+}

@@ -1,0 +1,32 @@
+import "tfplan/v2" as tfplan
+
+allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_instance" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "google_compute_instance_template" and
+		resource_changes.mode is "managed" and
+		resource_changes.change.actions is ["create"]
+}
+
+print("CIS 4.5: Ensure that IP forwarding is not enabled on Instances")
+
+can_ip_forward_is_disabled_in_compute_instance = rule {
+	all allComputeInstances as _, instance {
+		instance.change.after.can_ip_forward is false
+	}
+}
+
+can_ip_forward_is_disabled_in_compute_instance_template = rule {
+	all allComputeInstanceTemplates as _, template {
+		template.change.after.can_ip_forward is false
+	}
+}
+
+main = rule {
+	can_ip_forward_is_disabled_in_compute_instance and
+	can_ip_forward_is_disabled_in_compute_instance_template
+}
