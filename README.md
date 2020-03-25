@@ -6,15 +6,12 @@ This repository contains a library of Sentinel policies that can be used within 
 
 ## Table of Contents
 - [Prerequisites](#Prerequisites)
-- [Finding Policies](#finding-policies)
-- [Repository Structure](#repository-structure)
-- [Resource Categorization](#resource-categorization)
-- [Policy Documentation](#policy-documentation)
-- [Implementation](#implementation)
+- [Documentation](#documentation)
 - [Setup & Integration](#setup-&-integration)
 - [Version Control System (VCS)](#version-control-system-(vcs))
 - [Policy Set Configuration](#policy-set-configuration)
 - [Policy Set Management](#policy-set-management)
+- [Policy Guides](#policy-guides)
 - [Useful Resources](#useful-resources)
 
 ---
@@ -30,96 +27,24 @@ Before you start adopting some of the policies within this library it is recomme
 
 ---
 
-## Finding Policies
-
-### Repository Structure
-We have attempted to implement a structure within this repository that will hopefully make the process of searching for policies easy. At a high-level, the structure that we are following is as follows:
+## Documentation
+The file and directory structure within this repository has been designed to have a descriptive `ROOT` directory that contains all policies that are related to a given standard. As an example, all policies for the Center for Internet Security Benchmarks are all located within the `cis` directory. Policies are then broken down by cloud service provider (i.e. AWS, Azure and GCP) and then categorized by cloud service (i.e. Compute, Databases, Networking etc.)
 
 ```
 .
-└── VENDOR
-    └── CLOUD_PROVIDER
-       └── RESOURCE_CATEGORY
-           └── POLICY_NAME
+└── ROOT
+    └── CLOUD
+       └── CATEGORY
+           └── POLICY
                └── ...
 ```
-### Resource Categorization
-The policy categorization model that we have defined is aligned with the common classification model already in use by many of the major cloud providers, namely:
 
-- AI and Machine Learning
-- API Management
-- Compute
-- Containers
-- Cost Management
-- Data Analytics
-- Databases
-- Developer Tools
-- Internet of Things
-- Kubernetes
-- Management and Governance
-- Media Services
-- Networking
-- Security and Identity
-- Serverless Computing
-- Storage
-- Web
+All `CATEGORY` related directories contain a single README.md that details all information that is required to assess and enforce a policy in Terraform Cloud. This information includes:
+- Policy name
+- Description of the controls that are evaluated
+- The Policy Set configuration that needs to be added to the `sentinel.hcl` file.
 
-### Usage Documentation
-
-All resource category directories contain a single README.md which contain:
-- The name of the individual polices.
-- A description of the controls that are evaluated.
-- A snippet of the configuration that needs to be added to your [Policy Set](https://www.terraform.io/docs/cloud/sentinel/manage-policies.html#policies-and-policy-sets) configuration file.
-
-You can review all available documentation by browsing to any of the following:
-
-#### Center for Internet Security
-- Amazon Web Services
-    - [Networking](cis/aws/networking/README.md)
-- Microsoft Azure
-    - [Compute](cis/azure/compute/README.md)
-    - [Databases](cis/azure/databases/README.md)
-    - [Networking](cis/azure/networking/README.md)
-    - [Storage](cis/azure/storage/README.md)
-- Google Cloud Platform
-    - [Compute](cis/gcp/compute/README.md)
-    - [Databases](cis/gcp/databases/README.md)
-    - [Kubernetes](cis/gcp/kubernetes/README.md)
-    - [Networking](cis/gcp/networking/README.md)
-    - [Storage](cis/gcp/storage/README.md)
-
-### Implementation
-
-As an example, the implementation of the structure can be seen in the following tree structure where:
-- The `vendor` that defined the controls is `cis` (Center for Internet Security)
-- The `cloud provider` in which the resource will be provisioned is `aws`
-- The `resource category` against which the control should be evaluates is `networking`
-- The `policy name` for the Sentinel policy is `aws-cis-4.1-networking-deny-public-ssh-acl-rules`
-
-```
-.
-└── cis
-    └── aws
-        └── networking
-            └── aws-cis-4.1-networking-deny-public-ssh-acl-rules
-                ├── test
-                │   └── aws-cis-4.1-networking-deny-public-ssh-acl-rules
-                └── testdata
-```
-
-All policies follow a prescriptive structure which allow us to adopt proven software development best practices such as version control, automated testing, and automated deployment. The following shows the extended structure for the `aws-cis-4.1-networking-deny-public-ssh-acl-rules`   
-
-```
-.
-├── aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel
-├── test
-│   └── aws-cis-4.1-networking-deny-public-ssh-acl-rules
-│       ├── failure.json
-│       └── success.json
-└── testdata
-    ├── mock-tfplan-failure.sentinel
-    └── mock-tfplan-success.sentinel
-```
+> **Note:** You can find a full list of all available policies in the [Policy Guides](#policy-guides) section.
 
 ---
 ↥ [back to top](#table-of-contents)
@@ -160,6 +85,26 @@ Now that you have configured your Policy Set, it is time to enforce this configu
 Now that the Policy Set is configured and ready, navigate to your target workspace and queue a new plan. You should see the policy check phase appear in the run details, and you should see the newly created policy execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
 
 ---
+
+## Policy Guides
+
+### Center for Internet Security (CIS)
+- Amazon Web Services
+    - [Networking](cis/aws/networking/README.md)
+- Microsoft Azure
+    - [Compute](cis/azure/compute/README.md)
+    - [Databases](cis/azure/databases/README.md)
+    - [Networking](cis/azure/networking/README.md)
+    - [Storage](cis/azure/storage/README.md)
+- Google Cloud Platform
+    - [Compute](cis/gcp/compute/README.md)
+    - [Databases](cis/gcp/databases/README.md)
+    - [Kubernetes](cis/gcp/kubernetes/README.md)
+    - [Networking](cis/gcp/networking/README.md)
+    - [Storage](cis/gcp/storage/README.md)
+
+---
+
 ↥ [back to top](#table-of-contents)
 
 ## Useful Resources
