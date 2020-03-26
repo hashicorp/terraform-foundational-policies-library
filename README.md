@@ -18,19 +18,26 @@ This repository contains a library of Sentinel policies that can be used within 
 
 ## Prerequisites
 
+↥ [back to top](#table-of-contents)
+
 Before you start adopting some of the policies within this library it is recommended that you do the following:
 
-1. [Install](https://docs.hashicorp.com/sentinel/intro/getting-started/install/) the Sentinel CLI. The CLI is an excellent tool for familiarizing yourself with the internals of Sentinel and allows you to `apply` and `test` policies outside of the Terraform platform. You can find more information related the Sentinel CLI in the [Enforce Policy with Sentinel](https://learn.hashicorp.com/terraform?track=sentinel#sentinel) learning track.
+1. [Install](https://docs.hashicorp.com/sentinel/intro/getting-started/install/) the Sentinel CLI. The CLI is an excellent tool for familiarizing yourself with the internals of Sentinel and allows you to `apply` and `test` policies outside of the Terraform platform. You can find more information related to the Sentinel CLI in the [Enforce Policy with Sentinel](https://learn.hashicorp.com/terraform?track=sentinel#sentinel) learning track.
 
-3. Terraform Cloud with the _Governance and Policy Plan_ enabled.
-4. Access to a [supported](https://www.terraform.io/docs/cloud/vcs/index.html#supported-vcs-providers) version control system (VCS) provider.
+3. Enable the _Governance and Policy Plan_ in Terraform Cloud.
+4. Have access to a [supported](https://www.terraform.io/docs/cloud/vcs/index.html#supported-vcs-providers) version control system (VCS) provider.
+
+> **NOTE:** The Governance and Policy Plan is a _paid_ plan in Terraform Cloud. You can learn more about changing your payment plan by reviewing the [Changing Your Payment Plan](https://www.terraform.io/docs/cloud/paid.html#changing-your-payment-plan) sections in the Terraform Cloud documentation.
 
 ---
 
 ## Documentation
+
+↥ [back to top](#table-of-contents)
+
 The file and directory structure within this repository has been designed to have a descriptive `ROOT` directory that contains all policies that are related to a given standard. As an example, all policies for the Center for Internet Security Benchmarks are all located within the `cis` directory. Policies are then broken down by cloud service provider (i.e. AWS, Azure and GCP) and then categorized by cloud service (i.e. Compute, Databases, Networking etc.)
 
-```
+```ruby
 .
 └── ROOT
     └── CLOUD
@@ -39,7 +46,7 @@ The file and directory structure within this repository has been designed to hav
                └── ...
 ```
 
-All `CATEGORY` related directories contain a single README.md that details all information that is required to assess and enforce a policy in Terraform Cloud. This information includes:
+All `CATEGORY` related directories contain a single `README.md` that details all information that is required to assess and enforce a policy in Terraform Cloud. This information includes:
 - Policy name
 - Description of the controls that are evaluated
 - The Policy Set configuration that needs to be added to the `sentinel.hcl` file.
@@ -47,46 +54,72 @@ All `CATEGORY` related directories contain a single README.md that details all i
 > **Note:** You can find a full list of all available policies in the [Policy Guides](#policy-guides) section.
 
 ---
-↥ [back to top](#table-of-contents)
 
 ## Setup & Integration
+
+↥ [back to top](#table-of-contents)
 
 Before you can use any of the policies within this library, you will need to configure Terraform Cloud. The following sections detail the high-level steps required to deploy a policy from the foundational policies library. The [Enforce Policy with Sentinel](https://learn.hashicorp.com/terraform?track=sentinel#sentinel) learning track covers the end-to-end process in greater detail. If this is the first time you are setting up a Sentinel policy, we encourage you to familiarize yourself with this track prior to continuing further.
 
 ### Version Control System (VCS)
 Terraform Cloud provides first-class support for VCS integration. This allows VCS repositories to contain all of the policies and configuration needed to manage Sentinel policy at scale. [Integrating with VCS](https://www.terraform.io/docs/cloud/getting-started/policies.html#integrating-with-vcs) is as simple as:
 
-1. [Connect a VCS Providers to Terraform Cloud](https://www.terraform.io/docs/cloud/vcs/index.html)
-2. Create a repository in your VCS provider that will be used as the source of your Policy Set configuration
-3. Clone the source repository to a local directory
+1. [Connect a VCS Provider to Terraform Cloud](https://www.terraform.io/docs/cloud/vcs/index.html)
+1. Create a repository in your VCS provider that will be used as the source of your Policy Set configuration
+1. Clone the source repository to a local directory
 
 ### Policy Set Configuration
 
-Once your VCS is integrated with Terraform Cloud, you are now ready to configure your Terraform Policy Set. The process for creating a Policy Set is as follows:
+Once the VCS is integrated with Terraform Cloud, start to configure your Terraform Policy Set as follows:
 
 1. Identifying a policy from the foundational policies library that you would like to enforce on a Terraform [Workspace](https://www.terraform.io/docs/cloud/workspaces/index.html)
-2. Review the README.md documentation and copy the configuration snippet for the policy you have chosen.
-3. Create a `sentinel.hcl` configuration file within the local directory for your repository.
-4. Edit the contents of the `sentinel.hcl` by pasting the configuration snippet into the body of the configuration file.
-5. Committing your changes to your local repository content and then use the `git push` command to upload the changes to your remote repository.
+1. Review the policy documentation and copy the configuration snippet for the policy you have chosen.
+1. Create a `sentinel.hcl` configuration file within the local directory for your repository.
+1. Edit the contents of the `sentinel.hcl` by pasting the configuration snippet into the body of the configuration file.
+1. Commit your changes to your local repository content and then use the `git push` command to upload the changes to your remote repository.
+
+> **Example Snippet**
+>
+> ```hcl
+>policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
+>  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
+>  enforcement_level = "advisory"
+>}
+>```
 
 
 ### Policy Set Management
 
-Now that you have configured your Policy Set, it is time to enforce this configuration on a Terraform Cloud workspace. This is achieved by:
+Now that the Policy Set is configured, it is time to enforce this configuration on a Terraform Cloud workspace. This is achieved by:
 
 1. Browsing to your Terraform Cloud organization settings
-2. Browse to Policy Set settings
-3. Connect a new Policy Set
-4. Connect your VCS
-5. Choose your repository
-6. Configure your policy settings (i.e. Policy Path, Branch & Workspace Scope)
 
-Now that the Policy Set is configured and ready, navigate to your target workspace and queue a new plan. You should see the policy check phase appear in the run details, and you should see the newly created policy execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-1-7911402d.png)
+
+2. Browse to Policy Set settings
+
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-2-91e18b49.png)
+
+3. Create a new Policy Set
+
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-3-aebd4959.png)
+
+4. Configure the Policy Settings (i.e. name, source, path, branch & workspace scope) and apply the settings
+
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-create-1d29f08b.png)
+
+
+To test the configuration, navigate to the target workspace and queue a new plan. You should see the policy check phase appear in the run details, and you should see the newly created policy execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
+
+The image below shows the output of an example policy evaluation:
+
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-run-69c10bb4.png)
 
 ---
 
 ## Policy Guides
+
+↥ [back to top](#table-of-contents)
 
 ### Center for Internet Security (CIS)
 - Amazon Web Services
@@ -105,9 +138,10 @@ Now that the Policy Set is configured and ready, navigate to your target workspa
 
 ---
 
+## Useful Resources
+
 ↥ [back to top](#table-of-contents)
 
-## Useful Resources
 - [Getting Started with Terraform Cloud](https://www.terraform.io/docs/cloud/getting-started/index.html)
 - [Configuring Version Control Access](https://www.terraform.io/docs/cloud/getting-started/vcs.html)
 - [Configuring Sentinel Policies](https://www.terraform.io/docs/cloud/getting-started/policies.html)
