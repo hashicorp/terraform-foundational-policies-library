@@ -1,6 +1,6 @@
 # Sentinel Foundational Policies Library
 
-This repository contains a library of Sentinel policies that can be used within Terraform Cloud to accelerate your adoption of policy as code. If you wish to learn more about the Sentinel and framework, please review the Sentinel [documentation](https://docs.hashicorp.com/sentinel/).
+This repository contains a library of Sentinel policies that can be used within Terraform Cloud to accelerate your adoption of policy as code. To learn more about the Sentinel and framework, please review the Sentinel [documentation](https://docs.hashicorp.com/sentinel/).
 
 ---
 
@@ -20,7 +20,7 @@ This repository contains a library of Sentinel policies that can be used within 
 
 ↥ [back to top](#table-of-contents)
 
-Before you start adopting some of the policies within this library it is recommended that you do the following:
+Before you start adopting some of the policies within this library, it is recommended that you do the following:
 
 1. [Install](https://docs.hashicorp.com/sentinel/intro/getting-started/install/) the Sentinel CLI. The CLI is an excellent tool for familiarizing yourself with the internals of Sentinel and allows you to `apply` and `test` policies outside of the Terraform platform. You can find more information related to the Sentinel CLI in the [Enforce Policy with Sentinel](https://learn.hashicorp.com/terraform?track=sentinel#sentinel) learning track.
 
@@ -72,8 +72,8 @@ Terraform Cloud provides first-class support for VCS integration. This allows VC
 
 Once the VCS is integrated with Terraform Cloud, start to configure your Terraform Policy Set as follows:
 
-1. Identifying a policy from the foundational policies library that you would like to enforce on a Terraform [Workspace](https://www.terraform.io/docs/cloud/workspaces/index.html)
-1. Review the policy documentation and copy the configuration snippet for the policy you have chosen.
+1. Identifying a policy from the foundational policies library that should be enforced on a Terraform [Workspace](https://www.terraform.io/docs/cloud/workspaces/index.html)
+1. Review the policy documentation and copy the configuration snippet for the policy of choice.
 1. Create a `sentinel.hcl` configuration file within the local directory for your repository.
 1. Edit the contents of the `sentinel.hcl` by pasting the configuration snippet into the body of the configuration file.
 1. Commit your changes to your local repository content and then use the `git push` command to upload the changes to your remote repository.
@@ -109,7 +109,7 @@ Now that the Policy Set is configured, it is time to enforce this configuration 
 ![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-create-1d29f08b.png)
 
 
-To test the configuration, navigate to the target workspace and queue a new plan. You should see the policy check phase appear in the run details, and you should see the newly created policy execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
+To test the configuration, navigate to the target workspace and queue a new plan. The policy check phase should now appear in the run details, and see the newly created policy will execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
 
 The image below shows the output of an example policy evaluation:
 
