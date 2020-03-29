@@ -9,33 +9,34 @@ allDefaultNetworkACLs = filter tfplan.resource_changes as _, resource_changes {
 
 print("CIS 4.3: Ensure the default security group of every VPC restricts all traffic")
 
-default_network_acl_ingress_is_configured = rule {
+
+deny_undefined_ingress_configuration = rule {
 	all allDefaultNetworkACLs as _, acls {
 		keys(acls.change.after) contains "ingress"
 	}
 }
 
-deny_all_vpc_inbound_acls = rule when default_network_acl_ingress_is_configured is true {
+deny_all_vpc_inbound_acls = rule when deny_undefined_ingress_configuration is true {
 	all allDefaultNetworkACLs as _, acls {
 		length(acls.change.after.ingress) == 0
 	}
 }
 
-default_network_acl_egress_is_configured = rule {
+deny_undefined_egress_configuration = rule {
 	all allDefaultNetworkACLs as _, acls {
 		keys(acls.change.after) contains "egress"
 	}
 }
 
-deny_all_vpc_outbound_acls = rule when default_network_acl_egress_is_configured is true {
+deny_all_vpc_outbound_acls = rule when deny_undefined_egress_configuration is true {
 	all allDefaultNetworkACLs as _, acls {
 		length(acls.change.after.egress) == 0
 	}
 }
 
 main = rule {
-	default_network_acl_ingress_is_configured and
-	default_network_acl_egress_is_configured and
+	deny_undefined_ingress_configuration and
+	deny_undefined_egress_configuration and
 	deny_all_vpc_inbound_acls and
 	deny_all_vpc_outbound_acls
 }
