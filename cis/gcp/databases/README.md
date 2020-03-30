@@ -11,7 +11,7 @@ For security, it is recommended to always use SSL encryption when connecting to 
 
 ```hcl
 policy "gcp-cis-6.1-databases-cloud-sql-databases-instance-requires-all-incoming-connections-to-use-ssl" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/databases/gcp-cis-6.1-databases-cloud-sql-databases-instance-requires-all-incoming-connections-to-use-ssl/gcp-cis-6.1-databases-cloud-sql-databases-instance-requires-all-incoming-connections-to-use-ssl.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/databases/gcp-cis-6.1-databases-cloud-sql-databases-instance-requires-all-incoming-connections-to-use-ssl/gcp-cis-6.1-databases-cloud-sql-databases-instance-requires-all-incoming-connections-to-use-ssl.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -26,7 +26,7 @@ To minimize attack surface on a Database server Instance, only trusted/known and
 
 ```hcl
 policy "gcp-cis-6.2-databases-cloud-sql-databases-instances-are-not-open-to-the-world" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/databases/gcp-cis-6.2-databases-cloud-sql-databases-instances-are-not-open-to-the-world/gcp-cis-6.2-databases-cloud-sql-databases-instances-are-not-open-to-the-world.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/databases/gcp-cis-6.2-databases-cloud-sql-databases-instances-are-not-open-to-the-world/gcp-cis-6.2-databases-cloud-sql-databases-instances-are-not-open-to-the-world.sentinel"
     enforcement_level = "advisory"
 }
 ```
