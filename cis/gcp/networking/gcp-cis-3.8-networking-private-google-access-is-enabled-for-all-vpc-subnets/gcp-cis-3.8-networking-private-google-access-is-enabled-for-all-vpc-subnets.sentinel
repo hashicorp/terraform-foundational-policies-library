@@ -3,17 +3,25 @@ import "tfplan/v2" as tfplan
 allSubnetworkResources = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_subnetwork" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 print("CIS 3.8: Ensure Private Google Access is enabled for all subnetwork in VPC Network")
 
-verify_private_ip_google_access_is_enabled = rule {
+deny_undefined_private_ip_google_access = rule {
+	all allSubnetworkResources as _, subnetwork {
+		keys(subnetwork.change.after) contains "private_ip_google_access"
+	}
+}
+
+verify_private_ip_google_access_is_enabled = rule when deny_undefined_private_ip_google_access is true {
 	all allSubnetworkResources as _, subnetwork {
 		subnetwork.change.after.private_ip_google_access is true
 	}
 }
 
 main = rule {
+	deny_undefined_private_ip_google_access and
 	verify_private_ip_google_access_is_enabled
 }

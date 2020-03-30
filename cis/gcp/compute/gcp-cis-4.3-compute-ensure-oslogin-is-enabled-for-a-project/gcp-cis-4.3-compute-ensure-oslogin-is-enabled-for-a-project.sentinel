@@ -4,30 +4,60 @@ import "strings"
 allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance_template" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 print("CIS 4.3: Ensure oslogin is enabled for a project")
 
-enable_oslogin_is_enabled_in_compute_instance_metadata = rule {
+deny_undefined_compute_instance_metadata = rule {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after) contains "metadata"
+	}
+}
+
+deny_undefined_compute_instance_enable_oslogin = rule when deny_undefined_compute_instance_metadata is true {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after.metadata) contains "enable-oslogin"
+	}
+}
+
+enable_oslogin_is_enabled_in_compute_instance_metadata = rule when deny_undefined_compute_instance_metadata is true {
 	all allComputeInstances as _, instance {
 		strings.to_lower(instance.change.after.metadata["enable-oslogin"]) is "true"
 	}
 }
 
-enable_oslogin_is_enabled_in_compute_instance_template_metadata = rule {
+deny_undefined_compute_instance_template_metadata = rule {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after) contains "metadata"
+	}
+}
+
+deny_undefined_compute_instance_template_enable_oslogin = rule when deny_undefined_compute_instance_template_metadata is true {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after.metadata) contains "enable-oslogin"
+	}
+}
+
+enable_oslogin_is_enabled_in_compute_instance_template_metadata = rule when deny_undefined_compute_instance_template_enable_oslogin is true {
 	all allComputeInstanceTemplates as _, template {
 		strings.to_lower(template.change.after.metadata["enable-oslogin"]) is "true"
 	}
 }
 
 main = rule {
+	deny_undefined_compute_instance_metadata and
+	deny_undefined_compute_instance_enable_oslogin and
+	deny_undefined_compute_instance_template_metadata and
+	deny_undefined_compute_instance_template_enable_oslogin and
 	enable_oslogin_is_enabled_in_compute_instance_metadata and
 	enable_oslogin_is_enabled_in_compute_instance_template_metadata
 }

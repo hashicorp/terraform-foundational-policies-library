@@ -3,17 +3,25 @@ import "tfplan/v2" as tfplan
 allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_container_cluster" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 print("CIS 7.4: Ensure Master authorized networks is set to Enabled on Kubernetes Engine Clusters")
 
-master_authorized_networks_config_is_configured = rule {
+deny_undefined_master_authorized_networks_config = rule {
+	all allContainerClusters as _, cluster {
+		keys(cluster.change.after) contains "master_authorized_networks_config"
+	}
+}
+
+master_authorized_networks_config_is_configured = rule when deny_undefined_master_authorized_networks_config is true {
 	all allContainerClusters as _, cluster {
 		length(cluster.change.after.master_authorized_networks_config) > 0
 	}
 }
 
 main = rule {
+	deny_undefined_master_authorized_networks_config and
 	master_authorized_networks_config_is_configured
 }

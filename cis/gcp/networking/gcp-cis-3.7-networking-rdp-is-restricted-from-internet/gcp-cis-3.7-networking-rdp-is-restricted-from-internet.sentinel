@@ -9,7 +9,8 @@ allUnsupportedSourceRanges = [
 allFirewallResources = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_firewall" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 print("CIS 3.7: Ensure that RDP access is restricted from the internet")

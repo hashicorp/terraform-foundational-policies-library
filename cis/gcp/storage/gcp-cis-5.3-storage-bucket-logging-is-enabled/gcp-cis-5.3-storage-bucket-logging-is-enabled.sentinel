@@ -3,17 +3,25 @@ import "tfplan/v2" as tfplan
 allStorageBuckets = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_storage_bucket" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 print("CIS 5.3: Ensure that logging is enabled for Cloud storage buckets")
 
-ensure_storage_bucket_logging_is_enabled = rule {
+deny_undefined_logging = rule {
+	all allStorageBuckets as _, bucket {
+		keys(bucket.change.after) contains "logging"
+	}
+}
+
+ensure_storage_bucket_logging_is_enabled = rule when deny_undefined_logging is true {
 	all allStorageBuckets as _, bucket {
 		length(bucket.change.after.logging) > 0
 	}
 }
 
 main = rule {
+	deny_undefined_logging and
 	ensure_storage_bucket_logging_is_enabled
 }
