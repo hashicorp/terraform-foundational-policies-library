@@ -9,7 +9,6 @@ allDefaultNetworkACLs = filter tfplan.resource_changes as _, resource_changes {
 
 print("CIS 4.3: Ensure the default security group of every VPC restricts all traffic")
 
-
 deny_undefined_ingress_configuration = rule {
 	all allDefaultNetworkACLs as _, acls {
 		keys(acls.change.after) contains "ingress"
