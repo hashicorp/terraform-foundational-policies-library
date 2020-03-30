@@ -41,7 +41,7 @@ getDiskEncryptionStatus = func(property) {
 
 print("CIS 4.6: Ensure VM disks for critical VMs are encrypted with Customer-Supplied Encryption Keys (CSEK)")
 
-disk_encryption_is_enabled_in_compute_disks = rule when deny_undefined_compute_disk_disk_encryption is true {
+disk_encryption_is_enabled_in_compute_disks = rule {
 	all allComputeDisks as _, disk {
 		length(disk.change.after.disk_encryption_key) != 0
 	}
