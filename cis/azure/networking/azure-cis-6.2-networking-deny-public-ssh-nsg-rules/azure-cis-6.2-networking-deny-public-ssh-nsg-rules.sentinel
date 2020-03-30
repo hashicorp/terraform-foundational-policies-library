@@ -5,7 +5,9 @@ restricted_source_address_prefixes = ["*", "internet", "any", "0.0.0.0", "/0"]
 
 allNetworkSecurityGroups = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "azurerm_network_security_group" and
-		resource_changes.mode is "managed"
+		resource_changes.mode is "managed" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
 }
 
 getNetworkSecurityGroupCompliance = func(groups, port) {

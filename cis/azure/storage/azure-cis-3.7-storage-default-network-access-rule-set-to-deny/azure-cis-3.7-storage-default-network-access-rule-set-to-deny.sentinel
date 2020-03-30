@@ -1,17 +1,29 @@
 import "tfplan/v2" as tfplan
 
+allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "azurerm_storage_account" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions contains "update")
+}
+
 print("CIS 3.7: Ensure default network access rule for Storage Accounts is set to deny")
 
-network_rules_default_action_is_deny = rule {
-	all filter tfplan.resource_changes as _, resource_changes {
-		resource_changes.mode is "managed" and
-			resource_changes.type is "azurerm_storage_account" and
-			resource_changes.change.actions is ["create"]
-	} as _, rc {
-		rc.change.after.network_rules[0].default_action is "Deny"
+deny_undefined_network_rules = rule {
+	all allStorageAccounts as _, accounts {
+		keys(accounts.change.after) contains "network_rules"
+	}
+}
+
+network_rules_default_action_is_deny = rule when deny_undefined_network_rules is true {
+	all allStorageAccounts as _, accounts {
+		all accounts.change.after.network_rules as network_rules {
+			network_rules.default_action is "Deny"
+		}
 	}
 }
 
 main = rule {
+	deny_undefined_network_rules and
 	network_rules_default_action_is_deny
 }
