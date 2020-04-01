@@ -4,7 +4,7 @@ allSubnetworkResources = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_subnetwork" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 3.8: Ensure Private Google Access is enabled for all subnetwork in VPC Network")

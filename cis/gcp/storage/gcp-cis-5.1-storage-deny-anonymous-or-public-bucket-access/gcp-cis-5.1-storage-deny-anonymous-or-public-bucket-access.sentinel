@@ -10,21 +10,21 @@ allBucketIAMMembers = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_storage_bucket_iam_member" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 allBucketIAMBindings = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_storage_bucket_iam_binding" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 allBucketIAMPolicies = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_storage_bucket_iam_policy" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 5.1: Ensure that Cloud Storage bucket is not anonymously or publicly accessible")

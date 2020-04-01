@@ -4,7 +4,7 @@ allDNSManagedZones = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_dns_managed_zone" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 3.5: Ensure that RSASHA1 is not used for zone-signing key in Cloud DNS DNSSEC")

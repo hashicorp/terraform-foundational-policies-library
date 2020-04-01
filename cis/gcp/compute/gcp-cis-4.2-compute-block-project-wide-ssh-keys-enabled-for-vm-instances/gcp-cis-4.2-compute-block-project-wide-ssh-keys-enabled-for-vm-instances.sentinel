@@ -5,14 +5,14 @@ allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance_template" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 4.2: Ensure 'Block Project-wide SSH keys' are enabled for VM instances")
