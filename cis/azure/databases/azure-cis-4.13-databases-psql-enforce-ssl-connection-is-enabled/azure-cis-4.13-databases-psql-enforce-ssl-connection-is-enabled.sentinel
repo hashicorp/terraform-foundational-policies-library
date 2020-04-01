@@ -4,7 +4,7 @@ allPGSQLServers = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.mode is "managed" and
 		resource_changes.type is "azurerm_postgresql_server" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 4.11: Ensure 'Enforce SSL connection' is set to 'ENABLED' for MySQL Database Server")

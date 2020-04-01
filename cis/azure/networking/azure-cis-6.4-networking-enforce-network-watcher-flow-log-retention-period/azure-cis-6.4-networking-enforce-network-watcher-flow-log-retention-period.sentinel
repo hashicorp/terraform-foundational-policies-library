@@ -4,7 +4,7 @@ allNetworkWatcherFlowLogs = filter tfplan.resource_changes as _, resource_change
 	resource_changes.type is "azurerm_network_watcher_flow_log" and
 		resource_changes.mode is "managed" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 6.4: Ensure that Network Security Group Flow Log retention period is greater than 90 days")
