@@ -4,7 +4,7 @@ allDefaultNetworkACLs = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.mode is "managed" and
 		resource_changes.type is "aws_default_network_acl" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions contains "update")
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 4.3: Ensure the default security group of every VPC restricts all traffic")
