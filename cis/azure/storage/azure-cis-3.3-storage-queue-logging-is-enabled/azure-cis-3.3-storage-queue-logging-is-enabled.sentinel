@@ -1,21 +1,43 @@
 import "tfplan/v2" as tfplan
 
+allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "azurerm_storage_account" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
+
 print("CIS 3.3: Ensure Storage logging is enabled for Queue service for read, write, and delete requests")
 
-queue_properties_logging_is_enabled = rule {
-	all filter tfplan.resource_changes as _, resource_changes {
-		resource_changes.mode is "managed" and
-			resource_changes.type is "azurerm_storage_account" and
-			resource_changes.change.actions is ["create"]
-	} as _, rc {
-		all rc.change.after.queue_properties as _, queue_properties {
-			queue_properties.logging[0].delete is true and
-				queue_properties.logging[0].read is true and
-				queue_properties.logging[0].write is true
+deny_undefined_queue_properties = rule {
+	all allStorageAccounts as _, accounts {
+		keys(accounts.change.after) contains "queue_properties" and
+			length(accounts.change.after.queue_properties else []) != 0
+	}
+}
+
+deny_undefined_queue_logging = rule when deny_undefined_queue_properties is true {
+	all allStorageAccounts as _, accounts {
+		all accounts.change.after.queue_properties as _, queue_properties {
+			keys(queue_properties) contains "logging"
+		}
+	}
+}
+
+queue_properties_logging_is_enabled = rule when deny_undefined_queue_logging is true {
+	all allStorageAccounts as _, accounts {
+		all accounts.change.after.queue_properties as _, queue_properties {
+			all queue_properties.logging as logging {
+				logging.delete is true and
+					logging.read is true and
+					logging.write is true
+			}
 		}
 	}
 }
 
 main = rule {
+	deny_undefined_queue_properties and
+	deny_undefined_queue_logging and
 	queue_properties_logging_is_enabled
 }

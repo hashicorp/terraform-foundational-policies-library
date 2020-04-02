@@ -1,14 +1,17 @@
 import "tfplan/v2" as tfplan
 
+allMYSQLServers = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "azurerm_mysql_server" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
+
 print("CIS 4.11: Ensure 'Enforce SSL connection' is set to 'ENABLED' for MySQL Database Server")
 
 ssl_enforcement_is_enabled = rule {
-	all filter tfplan.resource_changes as _, resource_changes {
-		resource_changes.mode is "managed" and
-			resource_changes.type is "azurerm_mysql_server" and
-			resource_changes.change.actions is ["create"]
-	} as _, rc {
-		rc.change.after.ssl_enforcement is "Enabled"
+	all allMYSQLServers as _, servers {
+		servers.change.after.ssl_enforcement is "Enabled"
 	}
 }
 

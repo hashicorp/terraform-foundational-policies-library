@@ -11,7 +11,7 @@ The potential security problem with using RDP over the Internet is that attacker
 
 ```hcl
 policy "azure-cis-6.1-networking-deny-public-rdp-nsg-rules" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/networking/azure-cis-6.1-networking-deny-public-rdp-nsg-rules/azure-cis-6.1-networking-deny-public-rdp-nsg-rules.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/azure/networking/azure-cis-6.1-networking-deny-public-rdp-nsg-rules/azure-cis-6.1-networking-deny-public-rdp-nsg-rules.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -25,7 +25,7 @@ The potential security problem with using SSH over the Internet is that attacker
 
 ```hcl
 policy "azure-cis-6.2-networking-deny-public-ssh-nsg-rules" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/networking/azure-cis-6.2-networking-deny-public-ssh-nsg-rules/azure-cis-6.2-networking-deny-public-ssh-nsg-rules.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/azure/networking/azure-cis-6.2-networking-deny-public-ssh-nsg-rules/azure-cis-6.2-networking-deny-public-ssh-nsg-rules.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -39,7 +39,7 @@ By default, for a SQL server, a Firewall exists with StartIp of 0.0.0.0 and EndI
 
 ```hcl
 policy "azure-cis-6.3-networking-deny-any-sql-database-ingress" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/networking/azure-cis-6.3-networking-deny-any-sql-database-ingress/azure-cis-6.3-networking-deny-any-sql-database-ingress.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/azure/networking/azure-cis-6.3-networking-deny-any-sql-database-ingress/azure-cis-6.3-networking-deny-any-sql-database-ingress.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -53,7 +53,7 @@ Flow logs enable capturing information about IP traffic flowing in and out of ne
 
 ```hcl
 policy "azure-cis-6.4-networking-enforce-network-watcher-flow-log-retention-period" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/azure/networking/azure-cis-6.4-networking-enforce-network-watcher-flow-log-retention-period/azure-cis-6.4-networking-enforce-network-watcher-flow-log-retention-period.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/azure/networking/azure-cis-6.4-networking-enforce-network-watcher-flow-log-retention-period/azure-cis-6.4-networking-enforce-network-watcher-flow-log-retention-period.sentinel"
   enforcement_level = "advisory"
 }
 ```
