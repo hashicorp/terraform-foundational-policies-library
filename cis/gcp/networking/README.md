@@ -11,7 +11,7 @@ The default network has automatically created firewall rules and has pre-fabrica
 
 ```hcl
 policy "gcp-cis-3.1-networking-deny-default-network-in-project" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.1-networking-deny-default-network-in-project/gcp-cis-3.1-networking-deny-default-network-in-project.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.1-networking-deny-default-network-in-project/gcp-cis-3.1-networking-deny-default-network-in-project.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -25,7 +25,7 @@ Domain Name System Security Extensions (DNSSEC) adds security to the Domain Name
 
 ```hcl
 policy "gcp-cis-3.3-networking-dnssec-is-enabled-for-cloud-dns" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.3-networking-dnssec-is-enabled-for-cloud-dns/gcp-cis-3.3-networking-dnssec-is-enabled-for-cloud-dns.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.3-networking-dnssec-is-enabled-for-cloud-dns/gcp-cis-3.3-networking-dnssec-is-enabled-for-cloud-dns.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -39,7 +39,7 @@ DNSSEC algorithm numbers in this registry may be used in CERT RRs. Zone signing 
 
 ```hcl
 policy "gcp-cis-3.4-networking-dnssec-rsasha1-is-not-key-signing-key" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.4-networking-dnssec-rsasha1-is-not-key-signing-key/gcp-cis-3.4-networking-dnssec-rsasha1-is-not-key-signing-key.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.4-networking-dnssec-rsasha1-is-not-key-signing-key/gcp-cis-3.4-networking-dnssec-rsasha1-is-not-key-signing-key.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -53,7 +53,7 @@ DNSSEC algorithm numbers in this registry may be used in CERT RRs. Zone signing 
 
 ```hcl
 policy "gcp-cis-3.5-networking-dnssec-rsasha1-is-not-used-for-zone-signing-key" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.5-networking-dnssec-rsasha1-is-not-used-for-zone-signing-key/gcp-cis-3.5-networking-dnssec-rsasha1-is-not-used-for-zone-signing-key.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.5-networking-dnssec-rsasha1-is-not-used-for-zone-signing-key/gcp-cis-3.5-networking-dnssec-rsasha1-is-not-used-for-zone-signing-key.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -67,7 +67,7 @@ To avoid the most general (0.0.0.0/0) destination IP Range specified from the In
 
 ```hcl
 policy "gcp-cis-3.6-networking-ssh-is-restricted-from-internet" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.6-networking-ssh-is-restricted-from-internet/gcp-cis-3.6-networking-ssh-is-restricted-from-internet.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.6-networking-ssh-is-restricted-from-internet/gcp-cis-3.6-networking-ssh-is-restricted-from-internet.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -81,7 +81,7 @@ To avoid the most general (0.0.0.0/0) destination IP Range specified from the In
 
 ```hcl
 policy "gcp-cis-3.7-networking-rdp-is-restricted-from-internet" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.7-networking-rdp-is-restricted-from-internet/gcp-cis-3.7-networking-rdp-is-restricted-from-internet.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.7-networking-rdp-is-restricted-from-internet/gcp-cis-3.7-networking-rdp-is-restricted-from-internet.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -95,7 +95,7 @@ VPC networks and subnetworks provide logically isolated and secure network parti
 
 ```hcl
 policy "gcp-cis-3.8-networking-private-google-access-is-enabled-for-all-vpc-subnets" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.8-networking-private-google-access-is-enabled-for-all-vpc-subnets/gcp-cis-3.8-networking-private-google-access-is-enabled-for-all-vpc-subnets.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.8-networking-private-google-access-is-enabled-for-all-vpc-subnets/gcp-cis-3.8-networking-private-google-access-is-enabled-for-all-vpc-subnets.sentinel"
   enforcement_level = "advisory"
 }
 ```
@@ -109,7 +109,7 @@ VPC networks and subnetworks provide logically isolated and secure network parti
 
 ```hcl
 policy "gcp-cis-3.9-networking-vpc-flow-logs-is-enabled-for-all-vpc-subnets" {
-  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/networking/gcp-cis-3.9-networking-vpc-flow-logs-is-enabled-for-all-vpc-subnets/gcp-cis-3.9-networking-vpc-flow-logs-is-enabled-for-all-vpc-subnets.sentinel"
+  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/networking/gcp-cis-3.9-networking-vpc-flow-logs-is-enabled-for-all-vpc-subnets/gcp-cis-3.9-networking-vpc-flow-logs-is-enabled-for-all-vpc-subnets.sentinel"
   enforcement_level = "advisory"
 }
 ```

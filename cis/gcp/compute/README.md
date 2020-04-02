@@ -11,7 +11,7 @@ Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH 
 
 ```hcl
 policy "gcp-cis-4.2-compute-block-project-wide-ssh-keys-enabled-for-vm-instances" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/compute/gcp-cis-4.2-compute-block-project-wide-ssh-keys-enabled-for-vm-instances/gcp-cis-4.2-compute-block-project-wide-ssh-keys-enabled-for-vm-instances.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/compute/gcp-cis-4.2-compute-block-project-wide-ssh-keys-enabled-for-vm-instances/gcp-cis-4.2-compute-block-project-wide-ssh-keys-enabled-for-vm-instances.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -24,7 +24,7 @@ Enabling osLogin ensures that SSH keys used to connect to instances are mapped w
 
 ```hcl
 policy "gcp-cis-4.3-compute-ensure-oslogin-is-enabled-for-a-project" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/compute/gcp-cis-4.3-compute-ensure-oslogin-is-enabled-for-a-project/gcp-cis-4.3-compute-ensure-oslogin-is-enabled-for-a-project.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/compute/gcp-cis-4.3-compute-ensure-oslogin-is-enabled-for-a-project/gcp-cis-4.3-compute-ensure-oslogin-is-enabled-for-a-project.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -37,7 +37,7 @@ If you enable the interactive serial console on an instance, clients can attempt
 ### Configuration
 ```hcl
 policy "gcp-cis-4.4-compute-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/compute/gcp-cis-4.4-compute-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance/gcp-cis-4.4-compute-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/compute/gcp-cis-4.4-compute-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance/gcp-cis-4.4-compute-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -51,7 +51,7 @@ Compute Engine instance cannot forward a packet unless the source IP address of 
 
 ```hcl
 policy "gcp-cis-4.5-compute-ensure-that-ip-forwarding-is-not-enabled-on-instances" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/compute/gcp-cis-4.5-compute-ensure-that-ip-forwarding-is-not-enabled-on-instances/gcp-cis-4.5-compute-ensure-that-ip-forwarding-is-not-enabled-on-instances.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/compute/gcp-cis-4.5-compute-ensure-that-ip-forwarding-is-not-enabled-on-instances/gcp-cis-4.5-compute-ensure-that-ip-forwarding-is-not-enabled-on-instances.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -68,7 +68,7 @@ If you forget or lose your key, there is no way for Google to recover the key or
 
 ```hcl
 policy "gcp-cis-4.6-compute-ensure-vm-disks-for-critical-vms-are-encrypted-with-customer-supplied-encryption-keys" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/compute/gcp-cis-4.6-compute-ensure-vm-disks-for-critical-vms-are-encrypted-with-customer-supplied-encryption-keys/gcp-cis-4.6-compute-ensure-vm-disks-for-critical-vms-are-encrypted-with-customer-supplied-encryption-keys.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/compute/gcp-cis-4.6-compute-ensure-vm-disks-for-critical-vms-are-encrypted-with-customer-supplied-encryption-keys/gcp-cis-4.6-compute-ensure-vm-disks-for-critical-vms-are-encrypted-with-customer-supplied-encryption-keys.sentinel"
     enforcement_level = "advisory"
 }
 ```

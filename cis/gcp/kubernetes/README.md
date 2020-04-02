@@ -11,7 +11,7 @@ Stackdriver Logging is part of the Stackdriver suite of products in Google Cloud
 
 ```hcl
 policy "gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -24,7 +24,7 @@ Stackdriver Monitoring to monitor signals and build operations in your Kubernete
 ### Configuration
 ```hcl
 policy "gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -37,7 +37,7 @@ In Kubernetes, authorizers interact by granting a permission if any authorizer g
 ### Configuration
 ```hcl
 policy "gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters/gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters/gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -50,7 +50,7 @@ Authorized networks are a way of specifying a restricted range of IP addresses t
 ### Configuration
 ```hcl
 policy "gcp-cis-7.4-kubernetes-ensure-master-authorized-networks-is-set-to-enabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.4-kubernetes-ensure-master-authorized-networks-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.4-kubernetes-ensure-master-authorized-networks-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.4-kubernetes-ensure-master-authorized-networks-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.4-kubernetes-ensure-master-authorized-networks-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -63,7 +63,7 @@ A cluster label is a key-value pair that helps you organize your Google Cloud Pl
 ### Configuration
 ```hcl
 policy "gcp-cis-7.5-kubernetes-ensure-kubernetes-clusters-are-configured-with-labels" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.5-kubernetes-ensure-kubernetes-clusters-are-configured-with-labels/gcp-cis-7.5-kubernetes-ensure-kubernetes-clusters-are-configured-with-labels.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.5-kubernetes-ensure-kubernetes-clusters-are-configured-with-labels/gcp-cis-7.5-kubernetes-ensure-kubernetes-clusters-are-configured-with-labels.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -76,7 +76,7 @@ Kubernetes Engine's node auto-repair feature helps you keep the nodes in your cl
 ### Configuration
 ```hcl
 policy "gcp-cis-7.7-kubernetes-ensure-automatic-node-repair-is-enabled-for-kubernetes-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.7-kubernetes-ensure-automatic-node-repair-is-enabled-for-kubernetes-clusters/gcp-cis-7.7-kubernetes-ensure-automatic-node-repair-is-enabled-for-kubernetes-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.7-kubernetes-ensure-automatic-node-repair-is-enabled-for-kubernetes-clusters/gcp-cis-7.7-kubernetes-ensure-automatic-node-repair-is-enabled-for-kubernetes-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -89,7 +89,7 @@ Node auto-upgrades help you keep the nodes in your cluster or node pool up to da
 ### Configuration
 ```hcl
 policy "gcp-cis-7.8-kubernetes-ensure-automatic-node-upgrades-is-enabled-on-kubernetes-engine-clusters-nodes" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.8-kubernetes-ensure-automatic-node-upgrades-is-enabled-on-kubernetes-engine-clusters-nodes/gcp-cis-7.8-kubernetes-ensure-automatic-node-upgrades-is-enabled-on-kubernetes-engine-clusters-nodes.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.8-kubernetes-ensure-automatic-node-upgrades-is-enabled-on-kubernetes-engine-clusters-nodes/gcp-cis-7.8-kubernetes-ensure-automatic-node-upgrades-is-enabled-on-kubernetes-engine-clusters-nodes.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -102,7 +102,7 @@ Container-Optimized OS is an operating system image for your Compute Engine VMs 
 ### Configuration
 ```hcl
 policy "gcp-cis-7.9-kubernetes-ensure-container-optimized-osis-used-for-kubernetes-engine-clusters-node-image" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.9-kubernetes-ensure-container-optimized-osis-used-for-kubernetes-engine-clusters-node-image/gcp-cis-7.9-kubernetes-ensure-container-optimized-osis-used-for-kubernetes-engine-clusters-node-image.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.9-kubernetes-ensure-container-optimized-osis-used-for-kubernetes-engine-clusters-node-image/gcp-cis-7.9-kubernetes-ensure-container-optimized-osis-used-for-kubernetes-engine-clusters-node-image.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -115,7 +115,7 @@ Basic authentication allows a user to authenticate to the cluster with a usernam
 ### Configuration
 ```hcl
 policy "gcp-cis-7.10-kubernetes-ensure-basic-authentication-is-disabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.10-kubernetes-ensure-basic-authentication-is-disabled-on-kubernetes-engine-clusters/gcp-cis-7.10-kubernetes-ensure-basic-authentication-is-disabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.10-kubernetes-ensure-basic-authentication-is-disabled-on-kubernetes-engine-clusters/gcp-cis-7.10-kubernetes-ensure-basic-authentication-is-disabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -128,7 +128,7 @@ A network policy is a specification of how groups of pods are allowed to communi
 ### Configuration
 ```hcl
 policy "gcp-cis-7.11-kubernetes-ensure-network-policy-is-enabled-on-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.11-kubernetes-ensure-network-policy-is-enabled-on-kubernetes-engine-clusters/gcp-cis-7.11-kubernetes-ensure-network-policy-is-enabled-on-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.11-kubernetes-ensure-network-policy-is-enabled-on-kubernetes-engine-clusters/gcp-cis-7.11-kubernetes-ensure-network-policy-is-enabled-on-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -141,7 +141,7 @@ If you disable client certificate generation to create a cluster without a clien
 ### Configuration
 ```hcl
 policy "gcp-cis-7.12-kubernetes-ensure-kubernetes-cluster-is-created-with-client-certificate-enabled" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.12-kubernetes-ensure-kubernetes-cluster-is-created-with-client-certificate-enabled/gcp-cis-7.12-kubernetes-ensure-kubernetes-cluster-is-created-with-client-certificate-enabled.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.12-kubernetes-ensure-kubernetes-cluster-is-created-with-client-certificate-enabled/gcp-cis-7.12-kubernetes-ensure-kubernetes-cluster-is-created-with-client-certificate-enabled.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -154,7 +154,7 @@ Google Cloud Platform Alias IP Ranges lets you assign ranges of internal IP addr
 ### Configuration
 ```hcl
 policy "gcp-cis-7.13-kubernetes-ensure-kubernetes-cluster-is-created-with-alias-ip-ranges-enabled" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.13-kubernetes-ensure-kubernetes-cluster-is-created-with-alias-ip-ranges-enabled/gcp-cis-7.13-kubernetes-ensure-kubernetes-cluster-is-created-with-alias-ip-ranges-enabled.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.13-kubernetes-ensure-kubernetes-cluster-is-created-with-alias-ip-ranges-enabled/gcp-cis-7.13-kubernetes-ensure-kubernetes-cluster-is-created-with-alias-ip-ranges-enabled.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -167,7 +167,7 @@ A Pod Security Policy is a cluster-level resource that controls security sensiti
 ### Configuration
 ```hcl
 policy "gcp-cis-7.14-kubernetes-ensure-podsecuritypolicy-controller-is-enabled-on-the-kubernetes-engine-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.14-kubernetes-ensure-podsecuritypolicy-controller-is-enabled-on-the-kubernetes-engine-clusters/gcp-cis-7.14-kubernetes-ensure-podsecuritypolicy-controller-is-enabled-on-the-kubernetes-engine-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.14-kubernetes-ensure-podsecuritypolicy-controller-is-enabled-on-the-kubernetes-engine-clusters/gcp-cis-7.14-kubernetes-ensure-podsecuritypolicy-controller-is-enabled-on-the-kubernetes-engine-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -180,7 +180,7 @@ A private cluster is a cluster that makes your master inaccessible from the publ
 ### Configuration
 ```hcl
 policy "gcp-cis-7.15-kubernetes-ensure-kubernetes-cluster-is-created-with-private-cluster-enabled" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.15-kubernetes-ensure-kubernetes-cluster-is-created-with-private-cluster-enabled/gcp-cis-7.15-kubernetes-ensure-kubernetes-cluster-is-created-with-private-cluster-enabled.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.15-kubernetes-ensure-kubernetes-cluster-is-created-with-private-cluster-enabled/gcp-cis-7.15-kubernetes-ensure-kubernetes-cluster-is-created-with-private-cluster-enabled.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -193,7 +193,7 @@ A service account is an identity that an instance or an application can use to r
 ### Configuration
 ```hcl
 policy "gcp-cis-7.17-kubernetes-ensure-default-service-account-is-not-used-for-project-access-in-kubernetes-clusters" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.17-kubernetes-ensure-default-service-account-is-not-used-for-project-access-in-kubernetes-clusters/gcp-cis-7.17-kubernetes-ensure-default-service-account-is-not-used-for-project-access-in-kubernetes-clusters.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.17-kubernetes-ensure-default-service-account-is-not-used-for-project-access-in-kubernetes-clusters/gcp-cis-7.17-kubernetes-ensure-default-service-account-is-not-used-for-project-access-in-kubernetes-clusters.sentinel"
     enforcement_level = "advisory"
 }
 ```
@@ -206,7 +206,7 @@ Access scopes are the legacy method of specifying permissions for your instance.
 ### Configuration
 ```hcl
 policy "gcp-cis-7.18-kubernetes-ensure-kubernetes-clusters-created-with-limited-service-account-access-scopes-for-project-access" {
-    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/gcp/kubernetes/gcp-cis-7.18-kubernetes-ensure-kubernetes-clusters-created-with-limited-service-account-access-scopes-for-project-access/gcp-cis-7.18-kubernetes-ensure-kubernetes-clusters-created-with-limited-service-account-access-scopes-for-project-access.sentinel"
+    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/gcp-cis-7.18-kubernetes-ensure-kubernetes-clusters-created-with-limited-service-account-access-scopes-for-project-access/gcp-cis-7.18-kubernetes-ensure-kubernetes-clusters-created-with-limited-service-account-access-scopes-for-project-access.sentinel"
     enforcement_level = "advisory"
 }
 ```

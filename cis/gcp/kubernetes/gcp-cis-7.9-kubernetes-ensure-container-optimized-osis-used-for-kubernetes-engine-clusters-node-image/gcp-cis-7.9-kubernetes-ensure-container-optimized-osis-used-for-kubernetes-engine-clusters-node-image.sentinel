@@ -9,18 +9,26 @@ supportedImageTypes = [
 allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_container_cluster" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 allNodePools = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_container_node_pool" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 7.9: Ensure Container-Optimized OS (cos) is used for Kubernetes Engine Clusters Node image")
 
-cluster_node_config_image_type_is_cos = rule {
+deny_undefined_cluster_node_config = rule {
+	all allContainerClusters as _, cluster {
+		keys(cluster.change.after) contains "node_config"
+	}
+}
+
+cluster_node_config_image_type_is_cos = rule when deny_undefined_cluster_node_config is true {
 	all allContainerClusters as _, cluster {
 		all cluster.change.after.node_config as _, node_config {
 			strings.to_lower(node_config.image_type) in supportedImageTypes
@@ -28,7 +36,13 @@ cluster_node_config_image_type_is_cos = rule {
 	}
 }
 
-pool_node_config_image_type_is_cos = rule {
+deny_undefined_pool_node_config = rule {
+	all allNodePools as _, pool {
+		keys(pool.change.after) contains "node_config"
+	}
+}
+
+pool_node_config_image_type_is_cos = rule when deny_undefined_pool_node_config is true {
 	all allNodePools as _, pool {
 		all pool.change.after.node_config as _, node_config {
 			strings.to_lower(node_config.image_type) in supportedImageTypes
@@ -37,6 +51,8 @@ pool_node_config_image_type_is_cos = rule {
 }
 
 main = rule {
+	deny_undefined_cluster_node_config and
+	deny_undefined_pool_node_config and
 	cluster_node_config_image_type_is_cos and
 	pool_node_config_image_type_is_cos
 }

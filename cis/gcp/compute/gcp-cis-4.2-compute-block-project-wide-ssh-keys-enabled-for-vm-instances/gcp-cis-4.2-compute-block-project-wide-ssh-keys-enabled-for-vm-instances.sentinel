@@ -4,30 +4,60 @@ import "strings"
 allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance_template" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 4.2: Ensure 'Block Project-wide SSH keys' are enabled for VM instances")
 
-block_project_ssh_keys_is_enabled_in_compute_instance_metadata = rule {
-	all allComputeInstances as _, instance {
-		strings.to_lower(instance.change.after.metadata["block-project-ssh-keys"]) is "true"
+deny_undefined_compute_instance_metadata = rule {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after) contains "metadata"
 	}
 }
 
-block_project_ssh_keys_is_enabled_in_compute_instance_template_metadata = rule {
-	all allComputeInstanceTemplates as _, template {
-		strings.to_lower(template.change.after.metadata["block-project-ssh-keys"]) is "true"
+deny_undefined_compute_instance_block_project_ssh_keys = rule when deny_undefined_compute_instance_metadata is true {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after.metadata) contains "block-project-ssh-keys"
+	}
+}
+
+block_project_ssh_keys_is_enabled_in_compute_instance_metadata = rule when deny_undefined_compute_instance_block_project_ssh_keys is true {
+	all allComputeInstances as _, instances {
+		strings.to_lower(instances.change.after.metadata["block-project-ssh-keys"]) is "true"
+	}
+}
+
+deny_undefined_compute_instance_template_metadata = rule {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after) contains "metadata"
+	}
+}
+
+deny_undefined_compute_instance_template_block_project_ssh_keys = rule when deny_undefined_compute_instance_template_metadata is true {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after.metadata) contains "block-project-ssh-keys"
+	}
+}
+
+block_project_ssh_keys_is_enabled_in_compute_instance_template_metadata = rule when deny_undefined_compute_instance_template_block_project_ssh_keys is true {
+	all allComputeInstanceTemplates as _, templates {
+		strings.to_lower(templates.change.after.metadata["block-project-ssh-keys"]) is "true"
 	}
 }
 
 main = rule {
+	deny_undefined_compute_instance_metadata and
+	deny_undefined_compute_instance_block_project_ssh_keys and
+	deny_undefined_compute_instance_template_metadata and
+	deny_undefined_compute_instance_template_block_project_ssh_keys and
 	block_project_ssh_keys_is_enabled_in_compute_instance_metadata and
 	block_project_ssh_keys_is_enabled_in_compute_instance_template_metadata
 }

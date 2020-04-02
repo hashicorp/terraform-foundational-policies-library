@@ -4,19 +4,22 @@ import "types"
 allComputeDisks = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_disk" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance_template" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 getDiskEncryptionStatus = func(property) {
@@ -40,7 +43,7 @@ print("CIS 4.6: Ensure VM disks for critical VMs are encrypted with Customer-Sup
 
 disk_encryption_is_enabled_in_compute_disks = rule {
 	all allComputeDisks as _, disk {
-		length(disk.change.after.disk_encryption_key) > 0
+		length(disk.change.after.disk_encryption_key) != 0
 	}
 }
 

@@ -4,30 +4,60 @@ import "strings"
 allComputeInstances = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 allComputeInstanceTemplates = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_compute_instance_template" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 4.4: Ensure 'Enable connecting to serial ports' is not enabled for VM Instance")
 
-serial_port_enable_is_disabled_in_compute_instance_metadata = rule {
+deny_undefined_compute_instance_metadata = rule {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after) contains "metadata"
+	}
+}
+
+deny_undefined_compute_instance_serial_port_enable = rule when deny_undefined_compute_instance_metadata is true {
+	all allComputeInstances as _, instances {
+		keys(instances.change.after.metadata) contains "serial-port-enable"
+	}
+}
+
+serial_port_enable_is_disabled_in_compute_instance_metadata = rule when deny_undefined_compute_instance_serial_port_enable is true {
 	all allComputeInstances as _, instance {
 		strings.to_lower(instance.change.after.metadata["serial-port-enable"]) is "false"
 	}
 }
 
-serial_port_enable_is_disabled_in_compute_instance_template_metadata = rule {
+deny_undefined_compute_instance_template_metadata = rule {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after) contains "metadata"
+	}
+}
+
+deny_undefined_compute_instance_template_serial_port_enable = rule when deny_undefined_compute_instance_template_metadata is true {
+	all allComputeInstanceTemplates as _, templates {
+		keys(templates.change.after.metadata) contains "serial-port-enable"
+	}
+}
+
+serial_port_enable_is_disabled_in_compute_instance_template_metadata = rule when deny_undefined_compute_instance_template_serial_port_enable is true {
 	all allComputeInstanceTemplates as _, template {
 		strings.to_lower(template.change.after.metadata["serial-port-enable"]) is "false"
 	}
 }
 
 main = rule {
+	deny_undefined_compute_instance_metadata and
+	deny_undefined_compute_instance_serial_port_enable and
+	deny_undefined_compute_instance_template_metadata and
+	deny_undefined_compute_instance_template_serial_port_enable and
 	serial_port_enable_is_disabled_in_compute_instance_metadata and
 	serial_port_enable_is_disabled_in_compute_instance_template_metadata
 }

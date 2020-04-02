@@ -3,7 +3,8 @@ import "tfplan/v2" as tfplan
 allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_container_cluster" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 7.15: Ensure Kubernetes Cluster is created with Private cluster enabled")

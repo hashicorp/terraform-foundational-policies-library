@@ -3,12 +3,27 @@ import "tfplan/v2" as tfplan
 allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.type is "google_container_cluster" and
 		resource_changes.mode is "managed" and
-		resource_changes.change.actions is ["create"]
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
 }
 
 print("CIS 7.12: Ensure Kubernetes Cluster is created with Client Certificate enabled")
 
-client_certificate_is_enabled = rule {
+deny_undefined_master_auth = rule {
+	all allContainerClusters as _, cluster {
+		keys(cluster.change.after) contains "master_auth"
+	}
+}
+
+deny_undefined_client_certificate_config = rule when deny_undefined_master_auth is true {
+	all allContainerClusters as _, cluster {
+		all cluster.change.after.master_auth as _, master_auth {
+			keys(master_auth) contains "client_certificate_config"
+		}
+	}
+}
+
+client_certificate_is_enabled = rule when deny_undefined_client_certificate_config is true {
 	all allContainerClusters as _, cluster {
 		all cluster.change.after.master_auth as _, master_auth {
 			all master_auth.client_certificate_config as _, client_certificate_config {
@@ -19,5 +34,7 @@ client_certificate_is_enabled = rule {
 }
 
 main = rule {
+	deny_undefined_master_auth and
+	deny_undefined_client_certificate_config and
 	client_certificate_is_enabled
 }
