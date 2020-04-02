@@ -2,7 +2,7 @@ resource_changes = {"module.vpc.aws_default_network_acl.this[0]": {
 	"address": "module.vpc.aws_default_network_acl.this[0]",
 	"change": {
 		"actions": [
-			"no-op",
+			"update",
 		],
 		"after": {
 			"default_network_acl_id": "acl-04485783afe0c55b6",
