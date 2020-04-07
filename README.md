@@ -96,6 +96,7 @@ Now that the Policy Set is configured, it is time to enforce this configuration 
 
 ![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-1-c2059cbc.png)
 
+
 2. Browse to Policy Set settings
 
 ![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-2-b5af64d8.png)
