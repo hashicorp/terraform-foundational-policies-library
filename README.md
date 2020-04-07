@@ -1,6 +1,6 @@
-# Sentinel Foundational Policies Library
+# Terraform Foundational Policies Library
 
-This repository contains a library of Sentinel policies that can be used within Terraform Cloud to accelerate your adoption of policy as code. To learn more about the Sentinel and framework, please review the Sentinel [documentation](https://docs.hashicorp.com/sentinel/).
+This repository contains a library of policies that can be used within Terraform Cloud to accelerate your adoption of policy as code. To learn more about the Sentinel language and framework, please review the Sentinel [documentation](https://docs.hashicorp.com/sentinel/).
 
 ---
 
