@@ -94,26 +94,26 @@ Now that the Policy Set is configured, it is time to enforce this configuration 
 
 1. Browsing to your Terraform Cloud organization settings
 
-![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-1-7911402d.png)
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-1-c2059cbc.png)
 
 2. Browse to Policy Set settings
 
-![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-2-91e18b49.png)
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-2-b5af64d8.png)
 
 3. Create a new Policy Set
 
-![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-3-aebd4959.png)
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-navigate-3-11c62bbf.png)
 
 4. Configure the Policy Settings (i.e. name, source, path, branch & workspace scope) and apply the settings
 
-![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-create-1d29f08b.png)
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-create-1044967a.png)
 
 
 To test the configuration, navigate to the target workspace and queue a new plan. The policy check phase should now appear in the run details, and see the newly created policy will execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
 
 The image below shows the output of an example policy evaluation:
 
-![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-run-69c10bb4.png)
+![](https://www.terraform.io/docs/cloud/getting-started/images/policy-sets-run-9674c2cc.png)
 
 ---
 
