@@ -81,10 +81,22 @@ Once the VCS is integrated with Terraform Cloud, start to configure your Terrafo
 > **Example Snippet**
 >
 > ```hcl
->policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
->  source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
->  enforcement_level = "advisory"
+>policy "gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters" {
+>    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/>gcp-cis-7.1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.>1-kubernetes-ensure-stackdriver-logging-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
+>    enforcement_level = "advisory"
 >}
+>
+>policy "gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters" {
+>    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/>gcp-cis-7.2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters/gcp-cis-7.>2-kubernetes-ensure-stackdriver-monitoring-is-set-to-enabled-on-kubernetes-engine-clusters.sentinel"
+>    enforcement_level = "advisory"
+>}
+>
+>policy "gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters" {
+>    source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/kubernetes/>gcp-cis-7.3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters/gcp-cis-7.>3-kubernetes-ensure-legacy-authorization-is-set-to-disabled-on-kubernetes-engine-clusters.sentinel"
+>    enforcement_level = "advisory"
+>}
+>
+>...
 >```
 
 
@@ -94,25 +106,25 @@ Now that the Policy Set is configured, it is time to enforce this configuration 
 
 1. Browsing to your Terraform Cloud organization settings
 
-![policy-sets-navigate-1](https://user-images.githubusercontent.com/10213/78725786-3fb6a600-78e5-11ea-9420-4c311f7c6356.png)
+![policy-sets-navigate-1](./images/policy-sets-navigate-1.png)
 
-2. Browse to Policy Set settings
+2. Browse to Policy Sets settings
 
-![policy-sets-navigate-2](https://user-images.githubusercontent.com/10213/78725793-434a2d00-78e5-11ea-84f7-bd51d78ab606.png)
+![policy-sets-navigate-2](./images/policy-sets-navigate-2.png)
 
-3. Create a new Policy Set
+3. Connect a new Policy Set
 
-![policy-sets-navigate-3](https://user-images.githubusercontent.com/10213/78725801-46ddb400-78e5-11ea-82bd-c5fb1761ebf6.png)
+![policy-sets-navigate-3](./images/policy-sets-navigate-3.png)
 
 4. Configure the Policy Settings (i.e. name, source, path, branch & workspace scope) and apply the settings
 
-![policy-sets-create](https://user-images.githubusercontent.com/10213/78725816-4e9d5880-78e5-11ea-8709-0e8440e8c183.png)
+![policy-sets-create](./images/policy-sets-create.png)
 
 To test the configuration, navigate to the target workspace and queue a new plan. The policy check phase should now appear in the run details, and see the newly created policy will execute and return the state of the policy evaluation (i.e. `Pass` or `Fail`).
 
 The image below shows the output of an example policy evaluation:
 
-![policy-sets-run](https://user-images.githubusercontent.com/10213/78725818-50671c00-78e5-11ea-808c-f9cb90bef9a1.png)
+![policy-sets-run](./images/policy-sets-run.png)
 
 ---
 
