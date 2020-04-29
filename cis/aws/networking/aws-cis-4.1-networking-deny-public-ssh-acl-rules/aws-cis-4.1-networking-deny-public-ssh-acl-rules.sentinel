@@ -1,21 +1,78 @@
 import "tfplan/v2" as tfplan
 
-public_ssh_acls = filter tfplan.resource_changes as _, resource_changes {
-	resource_changes.mode is "managed" and
-		resource_changes.type is "aws_network_acl_rule" and
-		resource_changes.change.after.rule_action is "allow" and
-		resource_changes.change.after.cidr_block is "0.0.0.0/0" and
-		resource_changes.change.after.to_port is 22 and
+aws_security_groups = filter tfplan.resource_changes as _, resource_changes {
+	length(resource_changes.change.after.ingress else []) != 0 and
+		resource_changes.mode is "managed" and
+		resource_changes.type is "aws_security_group" and
 		(resource_changes.change.actions contains "create" or
 			resource_changes.change.actions is ["update"])
 }
 
-print("CIS 4.1: Ensure no security groups allow ingress from 0.0.0.0/0 to port 22")
+aws_security_group_rules = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "aws_security_group_rule" and
+		resource_changes.change.after.type is "ingress" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
 
-deny_public_ssh_acl_rules = rule {
-	length(public_ssh_acls) == 0
+ssh_security_groups = filter aws_security_groups as _, asg {
+	any asg.change.after.ingress as _, ingress {
+		ingress.to_port is 22 or
+			(ingress.from_port <= 22 and
+				ingress.to_port >= 22)
+	}
+}
+
+ssh_security_group_rules = filter aws_security_group_rules as _, asgr {
+	asgr.change.after.to_port is 22 or
+		(asgr.change.after.from_port <= 22 and
+			asgr.change.after.to_port >= 22)
+}
+
+protocol_security_groups = filter aws_security_groups as _, asg {
+	all asg.change.after.ingress as _, ingress {
+		ingress.protocol is "-1"
+	}
+}
+
+protocol_security_group_rules = filter aws_security_group_rules as _, asgr {
+	asgr.change.after.protocol is "-1"
+}
+
+print("CIS 4.1: Ensure no AWS security groups allow ingress from 0.0.0.0/0 to port 22")
+
+deny_public_ssh_security_groups = rule {
+	all ssh_security_groups as _, ssg {
+		all ssg.change.after.ingress as _, ingress {
+			ingress.cidr_blocks not contains "0.0.0.0/0"
+		}
+	}
+}
+
+deny_public_ssh_security_group_rules = rule {
+	all ssh_security_group_rules as _, ssgr {
+		ssgr.change.after.cidr_blocks not contains "0.0.0.0/0"
+	}
+}
+
+deny_all_open_protocol_security_groups = rule {
+	all protocol_security_groups as _, psg {
+		all psg.change.after.ingress as _, ingress {
+			ingress.cidr_blocks not contains "0.0.0.0/0"
+		}
+	}
+}
+
+deny_all_open_protocol_security_group_rules = rule {
+	all protocol_security_group_rules as _, psgr {
+		psgr.change.after.cidr_blocks not contains "0.0.0.0/0"
+	}
 }
 
 main = rule {
-	deny_public_ssh_acl_rules
+	deny_public_ssh_security_groups and
+	deny_public_ssh_security_group_rules and
+	deny_all_open_protocol_security_groups and
+	deny_all_open_protocol_security_group_rules
 }
