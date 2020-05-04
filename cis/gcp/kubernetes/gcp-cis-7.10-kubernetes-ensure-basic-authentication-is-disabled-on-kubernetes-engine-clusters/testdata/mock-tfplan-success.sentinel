@@ -39,6 +39,8 @@ resource_changes = {
 								"issue_client_certificate": true,
 							},
 						],
+						"password": "",
+						"username": "",
 					},
 				],
 				"master_authorized_networks_config": [
