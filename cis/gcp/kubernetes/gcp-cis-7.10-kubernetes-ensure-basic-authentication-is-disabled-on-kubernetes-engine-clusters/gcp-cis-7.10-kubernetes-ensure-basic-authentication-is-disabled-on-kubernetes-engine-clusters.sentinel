@@ -9,22 +9,24 @@ allContainerClusters = filter tfplan.resource_changes as _, resource_changes {
 
 print("CIS 7.10: Ensure Basic Authentication is disabled on Kubernetes Engine Clusters")
 
-deny_undefined_master_auth = rule {
+master_auth_is_defined = rule {
 	all allContainerClusters as _, cluster {
 		keys(cluster.change.after) contains "master_auth"
 	}
 }
 
-basic_authentication_is_disabled = rule when deny_undefined_master_auth is true {
+basic_authentication_is_disabled = rule when master_auth_is_defined is true {
 	all allContainerClusters as _, cluster {
 		all cluster.change.after.master_auth as _, master_auth {
-			keys(master_auth) not contains "username" and
-				keys(master_auth) not contains "password"
+			keys(master_auth) contains "username" and
+				length(master_auth.username) == 0 and
+				keys(master_auth) contains "password" and
+				length(master_auth.password) == 0
 		}
 	}
 }
 
 main = rule {
-	deny_undefined_master_auth and
+	master_auth_is_defined and
 	basic_authentication_is_disabled
 }
