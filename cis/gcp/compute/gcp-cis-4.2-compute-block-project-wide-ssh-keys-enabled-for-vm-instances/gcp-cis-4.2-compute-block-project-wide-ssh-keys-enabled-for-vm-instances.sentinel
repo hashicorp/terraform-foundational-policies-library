@@ -19,7 +19,7 @@ print("CIS 4.2: Ensure 'Block Project-wide SSH keys' are enabled for VM instance
 
 deny_undefined_compute_instance_metadata = rule {
 	all allComputeInstances as _, instances {
-		keys(instances.change.after) contains "metadata"
+		instances.change.after.metadata is not null
 	}
 }
 
