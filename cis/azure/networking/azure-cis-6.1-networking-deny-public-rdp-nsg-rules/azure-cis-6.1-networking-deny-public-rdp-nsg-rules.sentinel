@@ -10,9 +10,46 @@ allNetworkSecurityGroups = filter tfplan.resource_changes as _, resource_changes
 			resource_changes.change.actions is ["update"])
 }
 
+allNetworkSecurityRules = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.type is "azurerm_network_security_rule" and
+		resource_changes.mode is "managed" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
+
 getNetworkSecurityGroupCompliance = func(groups, port) {
 	mapSecurityRules = {}
 	for groups as _, group {
+		if keys(group.change.after) not contains "security_rule" {
+			# Check if standalone Network Security Rule block(s) was defined.
+			#
+			# Terraform currently provides both a standalone Network Security
+			# Rule resource, and allows for Network Security Rules to be
+			# defined in-line within the Network Security Group resource.
+			# At this time you cannot use a Network Security Group with
+			# in-line Network Security Rules in conjunction with any
+			# Network Security Rule resources. Doing so will cause a
+			# conflict of rule settings and will overwrite rules.
+			#
+			# https://www.terraform.io/docs/providers/azurerm/r/network_security_rule.html
+			for allNetworkSecurityRules as sr {
+				destinationPortRange = allNetworkSecurityRules[sr]["change"]["after"]["destination_port_range"]
+				sourceAddressPrefix = allNetworkSecurityRules[sr]["change"]["after"]["source_address_prefix"]
+				securityRuleName = allNetworkSecurityRules[sr]["change"]["after"]["name"]
+				if destinationPortRange is "*" or destinationPortRange is port {
+					if sourceAddressPrefix in restricted_source_address_prefixes {
+						mapSecurityRules[securityRuleName] = sr
+					}
+				} else if destinationPortRange matches "-" {
+					listPortRange = strings.split(destinationPortRange, "-")
+					if int(listPortRange[0]) < int(port) and int(listPortRange[1]) > int(port) {
+						mapSecurityRules[securityRuleName] = sr
+					}
+				}
+			}
+			return length(mapSecurityRules)
+		}
+
 		for group.change.after.security_rule as sr {
 			if sr.destination_port_range is "*" or sr.destination_port_range is port {
 				if sr.source_address_prefix in restricted_source_address_prefixes {
