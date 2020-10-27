@@ -1,26 +1,82 @@
+---
 name: sentinel
+
 on:
   push:
   pull_request:
     branches:
       - master
+
 jobs:
   sentinel-format:
     runs-on: ubuntu-latest
     container:
-      image: thrashr888/sentinel-simulator
+      image: docker.io/library/debian:10-slim
     steps:
-      - name: Checkout
+      - name: "Checkout"
         uses: actions/checkout@v2
-      - name: Sentinel Format
-        run: sentinel fmt -check=true $(find . -name "*.sentinel")
+      - name: "Advanced Package Tool"
+        run: |-
+          apt-get update \
+          && apt-get install \
+            --assume-yes \
+            --no-install-recommends \
+            ca-certificates=* \
+            curl=* \
+            unzip=* \
+          && apt-get clean \
+          && rm \
+            --force \
+            --recursive \
+            /var/lib/apt/lists/*
+      - name: "Install Sentinel"
+        env:
+          SENTINEL_VERSION: 0.16.1
+        run: |-
+          curl \
+            --show-error \
+            --silent \
+            --request GET \
+            https://releases.hashicorp.com/sentinel/${SENTINEL_VERSION}/sentinel_${SENTINEL_VERSION}_linux_amd64.zip \
+            --output \
+            sentinel_${SENTINEL_VERSION}_linux_amd64.zip \
+          && unzip -d /usr/local/bin \
+            sentinel_${SENTINEL_VERSION}_linux_amd64.zip
+      - name: "Sentinel Format"
+        run: sentinel fmt -check=true $(find . -name "*.sentinel" -type f)
   sentinel-test:
-    needs: sentinel-format
     runs-on: ubuntu-latest
     container:
-      image: thrashr888/sentinel-simulator
+      image: docker.io/library/debian:10-slim
     steps:
-      - name: Checkout
+      - name: "Checkout"
         uses: actions/checkout@v2
-      - name: Sentinel Test
-        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
+      - name: "Advanced Package Tool"
+        run: |-
+          apt-get update \
+          && apt-get install \
+            --assume-yes \
+            --no-install-recommends \
+            ca-certificates=* \
+            curl=* \
+            unzip=* \
+          && apt-get clean \
+          && rm \
+            --force \
+            --recursive \
+            /var/lib/apt/lists/*
+      - name: "Install Sentinel"
+        env:
+          SENTINEL_VERSION: 0.16.1
+        run: |-
+          curl \
+            --show-error \
+            --silent \
+            --request GET \
+            https://releases.hashicorp.com/sentinel/${SENTINEL_VERSION}/sentinel_${SENTINEL_VERSION}_linux_amd64.zip \
+            --output \
+            sentinel_${SENTINEL_VERSION}_linux_amd64.zip \
+          && unzip -d /usr/local/bin \
+            sentinel_${SENTINEL_VERSION}_linux_amd64.zip
+      - name: "Sentinel Test"
+        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*" ! -path "*/examples/*")
