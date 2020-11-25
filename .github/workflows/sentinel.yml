@@ -8,19 +8,19 @@ jobs:
   sentinel-format:
     runs-on: ubuntu-latest
     container:
-      image: thrashr888/sentinel-simulator
+      image: hashicorp/sentinel
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Format
-        run: sentinel fmt -check=true $(find . -name "*.sentinel")
+        run: fmt -check=true $(find . -name "*.sentinel")
   sentinel-test:
     needs: sentinel-format
     runs-on: ubuntu-latest
     container:
-      image: thrashr888/sentinel-simulator
+      image: hashicorp/sentinel
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Test
-        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
+        run: test $(find . -name "*.sentinel" ! -path "*/testdata/*")
