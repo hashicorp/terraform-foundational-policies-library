@@ -10,6 +10,8 @@ jobs:
     container:
       image: hashicorp/sentinel
     steps:
+      - name: Git Version
+        run: git --version
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Format
