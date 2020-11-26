@@ -10,12 +10,10 @@ jobs:
     container:
       image: hashicorp/sentinel
     steps:
-      - name: Git Version
-        run: git --version
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Format
-        run: fmt -check=true $(find . -name "*.sentinel")
+        run: sentinel fmt -check=true $(find . -name "*.sentinel")
   sentinel-test:
     needs: sentinel-format
     runs-on: ubuntu-latest
@@ -25,4 +23,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Sentinel Test
-        run: test $(find . -name "*.sentinel" ! -path "*/testdata/*")
+        run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
