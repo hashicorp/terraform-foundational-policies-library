@@ -1,4 +1,5 @@
 import "tfplan/v2" as tfplan
+import "types"
 
 allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.mode is "managed" and
@@ -7,15 +8,22 @@ allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
 			resource_changes.change.actions is ["update"])
 }
 
+allStorageAccountNetworkRules = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "azurerm_storage_account_network_rules" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
+
 print("CIS 3.8: Ensure 'Trusted Microsoft Services' is enabled for Storage Account access")
 
-deny_undefined_network_rules = rule {
+storage_account_has_built_in_network_rules = rule {
 	all allStorageAccounts as _, accounts {
 		keys(accounts.change.after) contains "network_rules"
 	}
 }
 
-deny_undefined_network_rules_bypass = rule when deny_undefined_network_rules is true {
+storage_account_built_in_network_rules_have_bypass = rule when storage_account_has_built_in_network_rules is true {
 	all allStorageAccounts as _, accounts {
 		all accounts.change.after.network_rules as network_rules {
 			keys(network_rules) contains "bypass"
@@ -23,7 +31,7 @@ deny_undefined_network_rules_bypass = rule when deny_undefined_network_rules is 
 	}
 }
 
-network_rules_default_action_is_deny = rule when deny_undefined_network_rules_bypass is true {
+storage_account_built_in_network_rules_bypass_is_azure_services = rule when storage_account_built_in_network_rules_have_bypass is true {
 	all allStorageAccounts as _, accounts {
 		all accounts.change.after.network_rules as network_rules {
 			all network_rules.bypass as bypass {
@@ -33,8 +41,85 @@ network_rules_default_action_is_deny = rule when deny_undefined_network_rules_by
 	}
 }
 
+storage_account_has_built_in_network_rule = func(allStorageAccounts, allStorageAccountNetworkRules) {
+	mapStandaloneStorageAccountNetworkRules = {}
+	for allStorageAccounts as _, accounts {
+		if keys(accounts.change.after) contains "network_rules" {
+			for allStorageAccountNetworkRules as nr {
+				networkRuleStorageAccountName = allStorageAccountNetworkRules[nr]["change"]["after"]["storage_account_name"]
+				if networkRuleStorageAccountName is accounts.name {
+					mapStandaloneStorageAccountNetworkRules[networkRuleStorageAccountName] = nr
+				}
+			}
+		}
+	}
+	return length(mapStandaloneStorageAccountNetworkRules) == 0
+}
+
+storage_account_has_standalone_storage_account_network_rule = func(allStorageAccounts, allStorageAccountNetworkRules) {
+	mapStandaloneStorageAccountNetworkRules = {}
+	for allStorageAccounts as _, accounts {
+		if keys(accounts.change.after) not contains "network_rules" {
+			for allStorageAccountNetworkRules as nr {
+				networkRuleStorageAccountName = allStorageAccountNetworkRules[nr]["change"]["after"]["storage_account_name"]
+				if networkRuleStorageAccountName is accounts.name {
+					mapStandaloneStorageAccountNetworkRules[networkRuleStorageAccountName] = nr
+				}
+			}
+		}
+	}
+	return length(mapStandaloneStorageAccountNetworkRules) == 1
+}
+
+# Check if standalone Storage Account Network Rules block(s) was defined.
+#
+# Network Rules can be defined either directly on the
+# azurerm_storage_account resource,
+# or using the
+# azurerm_storage_account_network_rules resource
+# - but the two cannot be used together.
+# Spurious changes will occur if both are used against the same Storage Account.
+#
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules
+
+standalone_network_rules_have_bypass = rule {
+	all allStorageAccountNetworkRules as _, network_rules {
+		keys(network_rules.change.after) contains "bypass"
+	}
+}
+
+print("------------------------------------------------------------------------")
+print(allStorageAccountNetworkRules)
+print(keys(allStorageAccountNetworkRules))
+print(length(allStorageAccountNetworkRules))
+print(values(allStorageAccountNetworkRules))
+print(types.type_of(allStorageAccountNetworkRules))
+for allStorageAccountNetworkRules as _, network_rules {
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print(types.type_of(network_rules))
+	print(types.type_of(network_rules["change"]["after"]["bypass"]))
+	print(network_rules["change"]["after"]["bypass"])
+	print(network_rules["change"]["after"]["bypass"] contains "AzureServices")
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+}
+print("------------------------------------------------------------------------")
+
+standalone_network_rules_bypass_has_azure_services = rule when standalone_network_rules_have_bypass is true {
+	all allStorageAccountNetworkRules as _, network_rules {
+		network_rules["change"]["after"]["bypass"] contains "AzureServices"
+	}
+}
+
 main = rule {
-	deny_undefined_network_rules and
-	deny_undefined_network_rules_bypass and
-	network_rules_default_action_is_deny
+	(storage_account_has_built_in_network_rule(
+		allStorageAccounts, allStorageAccountNetworkRules) ==
+		true and
+		storage_account_has_built_in_network_rules and
+		storage_account_built_in_network_rules_have_bypass and
+		storage_account_built_in_network_rules_bypass_is_azure_services) or
+	(storage_account_has_standalone_storage_account_network_rule(
+		allStorageAccounts, allStorageAccountNetworkRules) ==
+		true and
+		standalone_network_rules_have_bypass and
+		standalone_network_rules_bypass_has_azure_services)
 }
