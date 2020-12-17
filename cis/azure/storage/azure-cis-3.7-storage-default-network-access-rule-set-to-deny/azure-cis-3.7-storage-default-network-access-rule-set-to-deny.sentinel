@@ -7,15 +7,22 @@ allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
 			resource_changes.change.actions is ["update"])
 }
 
+allStorageAccountNetworkRules = filter tfplan.resource_changes as _, resource_changes {
+	resource_changes.mode is "managed" and
+		resource_changes.type is "azurerm_storage_account_network_rules" and
+		(resource_changes.change.actions contains "create" or
+			resource_changes.change.actions is ["update"])
+}
+
 print("CIS 3.7: Ensure default network access rule for Storage Accounts is set to deny")
 
-deny_undefined_network_rules = rule {
+storage_account_contains_network_rules = rule {
 	all allStorageAccounts as _, accounts {
 		keys(accounts.change.after) contains "network_rules"
 	}
 }
 
-network_rules_default_action_is_deny = rule when deny_undefined_network_rules is true {
+storage_account_network_rules_default_action_is_deny = rule when storage_account_contains_network_rules is true {
 	all allStorageAccounts as _, accounts {
 		all accounts.change.after.network_rules as network_rules {
 			network_rules.default_action is "Deny"
@@ -23,7 +30,66 @@ network_rules_default_action_is_deny = rule when deny_undefined_network_rules is
 	}
 }
 
+storage_account_has_built_in_network_rule = func(allStorageAccounts, allStorageAccountNetworkRules) {
+	mapStandaloneStorageAccountNetworkRules = {}
+	for allStorageAccounts as _, accounts {
+		if keys(accounts.change.after) contains "network_rules" {
+			for allStorageAccountNetworkRules as nr {
+				networkRuleStorageAccountName = allStorageAccountNetworkRules[nr]["change"]["after"]["storage_account_name"]
+				if networkRuleStorageAccountName is accounts.name {
+					mapStandaloneStorageAccountNetworkRules[networkRuleStorageAccountName] = nr
+				}
+			}
+		}
+	}
+	return length(mapStandaloneStorageAccountNetworkRules) == 0
+}
+
+storage_account_has_standalone_storage_account_network_rule = func(allStorageAccounts, allStorageAccountNetworkRules) {
+	mapStandaloneStorageAccountNetworkRules = {}
+	for allStorageAccounts as _, accounts {
+		if keys(accounts.change.after) not contains "network_rules" {
+			for allStorageAccountNetworkRules as nr {
+				networkRuleStorageAccountName = allStorageAccountNetworkRules[nr]["change"]["after"]["storage_account_name"]
+				if networkRuleStorageAccountName is accounts.name {
+					mapStandaloneStorageAccountNetworkRules[networkRuleStorageAccountName] = nr
+				}
+			}
+		}
+	}
+	return length(mapStandaloneStorageAccountNetworkRules) == 1
+}
+
+# Check if standalone Storage Account Network Rules block(s) was defined.
+#
+# Network Rules can be defined either directly on the
+# azurerm_storage_account resource,
+# or using the
+# azurerm_storage_account_network_rules resource
+# - but the two cannot be used together.
+# Spurious changes will occur if both are used against the same Storage Account.
+#
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules
+
+standalone_network_rules_contains_default_action = rule {
+	all allStorageAccountNetworkRules as _, network_rules {
+		keys(network_rules.change.after) contains "default_action"
+	}
+}
+
+standalone_network_rules_default_action_is_deny = rule when standalone_network_rules_contains_default_action is true {
+	all allStorageAccountNetworkRules as _, network_rules {
+		network_rules.change.after.default_action is "Deny"
+	}
+}
+
 main = rule {
-	deny_undefined_network_rules and
-	network_rules_default_action_is_deny
+	(storage_account_has_built_in_network_rule(
+		allStorageAccounts,allStorageAccountNetworkRules) == true and
+	storage_account_contains_network_rules and
+	storage_account_network_rules_default_action_is_deny) or
+	(storage_account_has_standalone_storage_account_network_rule(
+		allStorageAccounts,allStorageAccountNetworkRules) == true and
+	standalone_network_rules_contains_default_action and
+	standalone_network_rules_default_action_is_deny)
 }
