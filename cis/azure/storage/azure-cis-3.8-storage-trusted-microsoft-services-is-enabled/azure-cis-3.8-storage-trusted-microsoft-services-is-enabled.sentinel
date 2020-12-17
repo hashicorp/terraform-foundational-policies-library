@@ -1,5 +1,4 @@
 import "tfplan/v2" as tfplan
-import "types"
 
 allStorageAccounts = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.mode is "managed" and
@@ -87,22 +86,6 @@ standalone_network_rules_have_bypass = rule {
 		keys(network_rules.change.after) contains "bypass"
 	}
 }
-
-print("------------------------------------------------------------------------")
-print(allStorageAccountNetworkRules)
-print(keys(allStorageAccountNetworkRules))
-print(length(allStorageAccountNetworkRules))
-print(values(allStorageAccountNetworkRules))
-print(types.type_of(allStorageAccountNetworkRules))
-for allStorageAccountNetworkRules as _, network_rules {
-	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-	print(types.type_of(network_rules))
-	print(types.type_of(network_rules["change"]["after"]["bypass"]))
-	print(network_rules["change"]["after"]["bypass"])
-	print(network_rules["change"]["after"]["bypass"] contains "AzureServices")
-	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-}
-print("------------------------------------------------------------------------")
 
 standalone_network_rules_bypass_has_azure_services = rule when standalone_network_rules_have_bypass is true {
 	all allStorageAccountNetworkRules as _, network_rules {
