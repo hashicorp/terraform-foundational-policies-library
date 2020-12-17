@@ -85,11 +85,13 @@ standalone_network_rules_default_action_is_deny = rule when standalone_network_r
 
 main = rule {
 	(storage_account_has_built_in_network_rule(
-		allStorageAccounts,allStorageAccountNetworkRules) == true and
-	storage_account_contains_network_rules and
-	storage_account_network_rules_default_action_is_deny) or
+		allStorageAccounts, allStorageAccountNetworkRules) ==
+		true and
+		storage_account_contains_network_rules and
+		storage_account_network_rules_default_action_is_deny) or
 	(storage_account_has_standalone_storage_account_network_rule(
-		allStorageAccounts,allStorageAccountNetworkRules) == true and
-	standalone_network_rules_contains_default_action and
-	standalone_network_rules_default_action_is_deny)
+		allStorageAccounts, allStorageAccountNetworkRules) ==
+		true and
+		standalone_network_rules_contains_default_action and
+		standalone_network_rules_default_action_is_deny)
 }
