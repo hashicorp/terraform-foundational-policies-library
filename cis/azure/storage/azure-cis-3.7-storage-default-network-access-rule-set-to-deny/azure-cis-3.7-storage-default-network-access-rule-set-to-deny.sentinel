@@ -16,13 +16,13 @@ allStorageAccountNetworkRules = filter tfplan.resource_changes as _, resource_ch
 
 print("CIS 3.7: Ensure default network access rule for Storage Accounts is set to deny")
 
-storage_account_contains_built_in_network_rules = rule {
+storage_account_has_built_in_network_rules = rule {
 	all allStorageAccounts as _, accounts {
 		keys(accounts.change.after) contains "network_rules"
 	}
 }
 
-storage_account_built_in_network_rules_default_action_is_deny = rule when storage_account_contains_built_in_network_rules is true {
+storage_account_built_in_network_rules_default_action_is_deny = rule when storage_account_has_built_in_network_rules is true {
 	all allStorageAccounts as _, accounts {
 		all accounts.change.after.network_rules as network_rules {
 			network_rules.default_action is "Deny"
@@ -71,13 +71,13 @@ storage_account_has_standalone_storage_account_network_rule = func(allStorageAcc
 #
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_network_rules
 
-standalone_network_rules_contains_default_action = rule {
+standalone_network_rules_has_default_action = rule {
 	all allStorageAccountNetworkRules as _, network_rules {
 		keys(network_rules.change.after) contains "default_action"
 	}
 }
 
-standalone_network_rules_default_action_is_deny = rule when standalone_network_rules_contains_default_action is true {
+standalone_network_rules_default_action_is_deny = rule when standalone_network_rules_has_default_action is true {
 	all allStorageAccountNetworkRules as _, network_rules {
 		network_rules.change.after.default_action is "Deny"
 	}
@@ -87,11 +87,11 @@ main = rule {
 	(storage_account_has_built_in_network_rule(
 		allStorageAccounts, allStorageAccountNetworkRules) ==
 		true and
-		storage_account_contains_built_in_network_rules and
+		storage_account_has_built_in_network_rules and
 		storage_account_built_in_network_rules_default_action_is_deny) or
 	(storage_account_has_standalone_storage_account_network_rule(
 		allStorageAccounts, allStorageAccountNetworkRules) ==
 		true and
-		standalone_network_rules_contains_default_action and
+		standalone_network_rules_has_default_action and
 		standalone_network_rules_default_action_is_deny)
 }
