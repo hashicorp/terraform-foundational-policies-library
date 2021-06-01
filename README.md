@@ -7,8 +7,8 @@ This repository contains a library of policies that can be used within Terraform
 ## Table of Contents
 - [Prerequisites](#Prerequisites)
 - [Documentation](#documentation)
-- [Setup & Integration](#setup-&-integration)
-- [Version Control System (VCS)](#version-control-system-(vcs))
+- [Setup & Integration](#setup--integration)
+- [Version Control System (VCS)](#version-control-system-vcs)
 - [Policy Set Configuration](#policy-set-configuration)
 - [Policy Set Management](#policy-set-management)
 - [Policy Guides](#policy-guides)
