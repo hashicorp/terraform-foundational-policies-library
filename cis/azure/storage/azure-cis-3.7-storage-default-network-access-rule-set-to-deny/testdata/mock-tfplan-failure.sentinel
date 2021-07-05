@@ -74,4 +74,109 @@ resource_changes = {
 		"provider_name":  "azurerm",
 		"type":           "azurerm_storage_account",
 	},
+	"azurerm_storage_account.account": {
+		"address": "azurerm_storage_account.account",
+		"change": {
+			"actions": [
+				"delete",
+				"create",
+			],
+			"after": {
+				"account_kind":             "StorageV2",
+				"account_replication_type": "LRS",
+				"account_tier":             "Standard",
+				"allow_blob_public_access": false,
+				"blob_properties": [
+					{
+						"cors_rule": [],
+						"delete_retention_policy": [
+							{
+								"days": 365,
+							},
+						],
+					},
+				],
+				"custom_domain":             [],
+				"enable_https_traffic_only": true,
+				"is_hns_enabled":            false,
+				"location":                  "westeurope",
+				"min_tls_version":           "TLS1_0",
+				"name":                      "account",
+				"queue_properties": [
+					{
+						"cors_rule": [],
+						"hour_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+						"logging": [
+							{
+								"delete":                true,
+								"read":                  true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+								"write":                 true,
+							},
+						],
+						"minute_metrics": [
+							{
+								"enabled":               true,
+								"include_apis":          true,
+								"retention_policy_days": 10,
+								"version":               "1.0",
+							},
+						],
+					},
+				],
+				"resource_group_name": "sentinel-foundational-azure",
+				"static_website":      [],
+				"tags":                null,
+				"timeouts":            null,
+			},
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "account",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_storage_account",
+	},
+	"azurerm_storage_account_network_rules.rules": {
+		"address": "azurerm_storage_account_network_rules.rules",
+		"change": {
+			"actions": [
+				"create",
+			],
+			"after": {
+				"bypass": [
+					"AzureServices",
+				],
+				"default_action":       "Allow",
+				"resource_group_name":  "sentinel-foundational-azure",
+				"storage_account_name": "account",
+				"timeouts":             null,
+			},
+			"after_unknown": {
+				"bypass": [
+					false,
+				],
+				"id":                         true,
+				"ip_rules":                   true,
+				"virtual_network_subnet_ids": true,
+			},
+			"before": null,
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "rules",
+		"provider_name":  "azurerm",
+		"type":           "azurerm_storage_account_network_rules",
+	},
 }
