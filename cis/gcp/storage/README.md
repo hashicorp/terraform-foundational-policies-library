@@ -10,7 +10,7 @@ Allowing anonymous and/or public access grants permissions to anyone to access b
 ### Configuration
 
 ```hcl
-policy "azure-cis-3.1-storage-secure-transfer-required-is-enabled" {
+policy "gcp-cis-5.1-storage-deny-anonymous-or-public-bucket-access" {
   source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/storage/gcp-cis-5.1-storage-deny-anonymous-or-public-bucket-access/gcp-cis-5.1-storage-deny-anonymous-or-public-bucket-access.sentinel"
   enforcement_level = "advisory"
 }
@@ -24,7 +24,7 @@ By enabling access and storage logs on target Storage buckets, it is possible to
 ### Configuration
 
 ```hcl
-policy "azure-cis-3.3-storage-queue-logging-is-enabled" {
+policy "gcp-cis-5.3-storage-bucket-logging-is-enabled" {
   source = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/gcp/storage/gcp-cis-5.3-storage-bucket-logging-is-enabled/gcp-cis-5.3-storage-bucket-logging-is-enabled.sentinel"
   enforcement_level = "advisory"
 }
