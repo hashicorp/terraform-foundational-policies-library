@@ -26,7 +26,7 @@ deny_undefined_network_rules_bypass = rule when deny_undefined_network_rules is 
 network_rules_default_action_is_deny = rule when deny_undefined_network_rules_bypass is true {
 	all allStorageAccounts as _, accounts {
 		all accounts.change.after.network_rules as network_rules {
-			all network_rules.bypass as bypass {
+			any network_rules.bypass as bypass {
 				bypass is "AzureServices"
 			}
 		}
