@@ -1,19 +1,19 @@
 import "tfplan/v2" as tfplan
 
 aws_security_groups = filter tfplan.resource_changes as _, resource_changes {
-	length(resource_changes.change.after.ingress else []) != 0 and
-		resource_changes.mode is "managed" and
+	resource_changes.mode is "managed" and
 		resource_changes.type is "aws_security_group" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions is ["update"])
+			resource_changes.change.actions is ["update"]) and
+		length(resource_changes.change.after.ingress else []) != 0
 }
 
 aws_security_group_rules = filter tfplan.resource_changes as _, resource_changes {
 	resource_changes.mode is "managed" and
 		resource_changes.type is "aws_security_group_rule" and
-		resource_changes.change.after.type is "ingress" and
 		(resource_changes.change.actions contains "create" or
-			resource_changes.change.actions is ["update"])
+			resource_changes.change.actions is ["update"]) and
+		resource_changes.change.after.type is "ingress"
 }
 
 ssh_security_groups = filter aws_security_groups as _, asg {
