@@ -310,4 +310,38 @@ resource_changes = {
 		"provider_name":  "aws",
 		"type":           "aws_security_group_rule",
 	},
+	"aws_security_group_rule.delete": {
+		"address": "aws_security_group_rule.delete",
+		"change": {
+			"actions": [
+				"delete",
+			],
+			"after":         null,
+			"after_unknown": {},
+			"before": {
+				"arn": "arn:aws:ec2:us-east-1:123445667:security-group/sg-11223344551122334",
+				"cidr_blocks": [
+					"10.0.0.0/16",
+				],
+				"description":       "delete",
+				"from_port":         0,
+				"id":                "sg-11223344551122334",
+				"ipv6_cidr_blocks":  null,
+				"prefix_list_ids":   null,
+				"protocol":          "tcp",
+				"security_group_id": "sg-11223344551122334",
+				"self":              false,
+				"source_security_group_id": null,
+				"to_port":                  1024,
+				"type":                     "ingress",
+			},
+		},
+		"deposed":        "",
+		"index":          null,
+		"mode":           "managed",
+		"module_address": "",
+		"name":           "delete",
+		"provider_name":  "aws",
+		"type":           "aws_security_group_rule",
+	},
 }
