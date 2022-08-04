@@ -7,20 +7,26 @@ on:
 jobs:
   sentinel-format:
     runs-on: ubuntu-latest
-    container:
-      image: hashicorp/sentinel
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install Sentinel
+        uses: bloominlabs/setup-hashicorp-releases@v1
+        with:
+          package: sentinel
+          version: ^0.18.11
       - name: Sentinel Format
         run: sentinel fmt -check=true $(find . -name "*.sentinel")
   sentinel-test:
     needs: sentinel-format
     runs-on: ubuntu-latest
-    container:
-      image: hashicorp/sentinel
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install Sentinel
+        uses: bloominlabs/setup-hashicorp-releases@v1
+        with:
+          package: sentinel
+          version: ^0.18.11
       - name: Sentinel Test
         run: sentinel test $(find . -name "*.sentinel" ! -path "*/testdata/*")
