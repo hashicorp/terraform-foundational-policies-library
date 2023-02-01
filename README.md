@@ -1,5 +1,7 @@
 # Terraform Foundational Policies Library
 
+> **IMPORTANT:** The Terraform Foundational Policies Library project has been archived. Getting started using Sentinel is now as easy as searching for policies in the [Terraform Registry](https://registry.terraform.io/browse/policies). 
+
 This repository contains a library of policies that can be used within Terraform Cloud to accelerate your adoption of policy as code. To learn more about the Sentinel language and framework, please review the Sentinel [documentation](https://docs.hashicorp.com/sentinel/).
 
 ---
